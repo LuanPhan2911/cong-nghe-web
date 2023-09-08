@@ -1,20 +1,11 @@
-<?php
-require_once "./middleware/check_login.php";
-
-if (!check_login()) {
-    header("location:login.php");
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/404.css">
+    <?php require_once "./layouts/styles.php" ?>
+    <link rel="stylesheet" href="assets/css/404.css">
     <title>404</title>
 </head>
 
@@ -41,15 +32,10 @@ if (!check_login()) {
                 </div>
             </div>
         </div>
-
-        <?php
-        require_once "./notify/toast_success.php"
-        ?>
-
     </main>
     <?php require_once "./layouts/footer.php" ?>
-    <script src="js/jquery-3.7.0.min.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.js"></script>
+    <?php require_once "./layouts/script.php" ?>
+
 </body>
 
 </html>

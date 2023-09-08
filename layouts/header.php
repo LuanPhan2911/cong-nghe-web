@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="./index.php">Review Truyện</a>
+                <a class="navbar-brand" href="./">Review Truyện</a>
 
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
@@ -28,7 +28,7 @@
                             ?>
                                 <li class="nav-item">
                                     <div class="d-flex justify-content-around align-items-center">
-                                        <img src="./images/truong-dich-review.jpeg" alt="" width="50px" height="50px" class="img-thumbnail">
+                                        <img src="assets/images/truong-dich-review.jpeg" alt="" width="50px" height="50px" class="img-thumbnail">
                                         <span><?php echo $_SESSION["name"] ?></span>
                                     </div>
                                 </li>

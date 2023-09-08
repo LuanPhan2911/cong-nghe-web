@@ -16,13 +16,22 @@ $data = mysqli_fetch_array($result);
 
 if (isset($data)) {
 
-    $_SESSION["role"] = $data["role"];
+    $role = boolval($data["role"]);
+    $_SESSION["role"] = $role;
     $_SESSION["name"] = $data["name"];
     $_SESSION["id"] = $data["id"];
 
-    $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
-    header("location:index.php");
-    exit;
+    // 1 is admin
+    if ($role === true) {
+
+        $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
+        // header("location:admin_index.php");
+        exit;
+    } else {
+        $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
+        header("location:index.php");
+        exit;
+    }
 } else {
     $_SESSION["err"] = $errorMessage;
     $_SESSION["email"] = $email;

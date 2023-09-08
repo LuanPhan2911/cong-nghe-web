@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/home.css">
+    <?php require_once "./layouts/styles.php" ?>
+    <link rel="stylesheet" href="assets/css/home.css">
     <title>Trang chủ</title>
 </head>
 
@@ -16,21 +14,18 @@
     <main>
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-8">
-
                     <div class="feature-review p-3 bg-white">
                         <h3>Đề cử</h3>
                         <div id="carousel" class="carousel slide">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="./images/truong-dich-review.jpeg">
+                                    <img src="assets/images/truong-dich-review.jpeg">
                                     <div class="carousel-caption d-none d-md-block">
-
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="./images/truong-dich-review.jpeg">
+                                    <img src="assets/images/truong-dich-review.jpeg">
                                     <div class="carousel-caption d-none d-md-block">
 
                                     </div>
@@ -56,7 +51,7 @@
                         <div class="review-content p-2 my-2">
                             <div class="row">
                                 <div class="col-4">
-                                    <img src="./images/review-truyen-trong-sinh-cung-truc-ma-vuong-gia-250x250.jpg" alt="" class="img-fluid img-thumbnail">
+                                    <img src="assets/images/review-truyen-trong-sinh-cung-truc-ma-vuong-gia-250x250.jpg" alt="" class="img-fluid img-thumbnail">
                                 </div>
                                 <div class="col-8">
                                     <div class="review-name">
@@ -177,8 +172,7 @@
 
 
 
-    <script src="js/jquery-3.7.0.min.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.js"></script>
+    <?php require_once "./layouts/script.php" ?>
 
 
 </body>

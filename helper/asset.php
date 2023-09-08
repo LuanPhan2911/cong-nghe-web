@@ -1,5 +1,5 @@
 <?php
 function asset($link)
 {
-    echo $link;
+    echo "assets/$link";
 }
