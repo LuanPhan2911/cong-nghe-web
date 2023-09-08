@@ -1,0 +1,13 @@
+.four_zero_four_bg {
+  background-image: url("../images/404.gif");
+  height: 400px;
+  background-position: center;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}

@@ -1,0 +1,33 @@
+.feature-review #carousel {
+  height: 400px;
+  overflow: hidden;
+}
+.feature-review #carousel img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+.reviews .review-content {
+  height: 200px;
+  overflow: hidden;
+}
+.review-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.review-content .review-name a {
+  font-size: 1.5em;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+}
+.review-content .review-name a:hover {
+  color: #f00;
+}
+
+@media (max-width: 576px) {
+  .review-content .review-name a {
+    font-size: 1em;
+  }
+}
