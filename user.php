@@ -55,7 +55,7 @@ if (empty($user)) {
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="avatar" class="d-flex justify-content-center mb-3 cursor-pointer">
-                                                <img src="<?php isset($user['avatar']) ? asset($user['avatar']) : asset('./images/users/default.webp')  ?>" class="rounded-circle img-thumbnail user-avatar">
+                                                <img src="<?php isset($user['avatar']) ? asset($user['avatar']) : asset('/users/default.webp')  ?>" class="rounded-circle img-thumbnail user-avatar">
                                             </label>
                                             <div class="fst-italic fw-light text-center">Nhấn vào ảnh trên để cập nhật ảnh đại diện</div>
                                             <input class="form-control" name="avatar" type="file" id="avatar" accept="image/*" hidden />
@@ -124,7 +124,7 @@ if (empty($user)) {
     </main>
     <?php require_once "./layouts/footer.php" ?>
     <?php require_once "./layouts/script.php" ?>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {
 
@@ -173,6 +173,7 @@ if (empty($user)) {
             })
             let avatarUrl = null;
             $("#avatar").change(function(e) {
+
                 let file = e.target.files[0];
                 if (avatarUrl) {
                     URL.revokeObjectURL(avatarUrl);

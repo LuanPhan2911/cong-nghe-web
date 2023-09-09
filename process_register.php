@@ -29,9 +29,10 @@ if (isset($data_email)) {
     exit;
 }
 
+$password_hash = password_hash($password, PASSWORD_BCRYPT);
 
 $query = "insert into users(name, email, password)
-    values('$name', '$email', '$password')";
+    values('$name', '$email', '$password_hash')";
 $result = mysqli_query($connect, $query);
 
 if (isset($result)) {
@@ -41,7 +42,7 @@ if (isset($result)) {
     $_SESSION['id'] = mysqli_insert_id($connect);
 
     $_SESSION["msg"] = "Bạn đã đăng ký thành công!";
-    header("location:index.php");
+    header("location:/");
 }
 
 

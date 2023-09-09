@@ -2,7 +2,7 @@
 require_once "./middleware/session_start.php";
 require_once "./helper/session_flash.php";
 if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
-    header("location:index.php");
+    header("location:");
 }
 ?>
 <!DOCTYPE html>

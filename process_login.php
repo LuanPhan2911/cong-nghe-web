@@ -10,11 +10,22 @@ if (empty($email) || empty($password)) {
     header("location:login.php");
     exit;
 }
-$query = "select * from users where email='$email'and password='$password'";
+
+$query = "select * from users where email='$email'and deleted_at is null";
 $result = mysqli_query($connect, $query);
 $data = mysqli_fetch_array($result);
 
 if (isset($data)) {
+
+    // verify password
+    $password_hash = $data['password'];
+    if (!password_verify($password, $password_hash)) {
+        $_SESSION["err"] = $errorMessage;
+        $_SESSION["email"] = $email;
+        header("location:login.php");
+        exit;
+    }
+
 
     $role = boolval($data["role"]);
     $_SESSION["role"] = $role;
@@ -25,11 +36,11 @@ if (isset($data)) {
     if ($role === true) {
 
         $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
-        // header("location:admin_index.php");
+        header("location:admin/");
         exit;
     } else {
         $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
-        header("location:index.php");
+        header("location:/");
         exit;
     }
 } else {

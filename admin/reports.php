@@ -1,6 +1,6 @@
 <?php
 require_once "../middleware/session_start.php";
-$brand = "Home";
+$brand = "Reports";
 $check_admin = isset($_SESSION["id"]) &&  isset($_SESSION["role"]) && $_SESSION['role'] === true;
 if (!$check_admin) {
     header("location:../");
@@ -14,7 +14,7 @@ if (!$check_admin) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once "./layouts/styles.php" ?>
-    <title>Admin - Index</title>
+    <title>Admin - Reports</title>
 </head>
 
 <body>

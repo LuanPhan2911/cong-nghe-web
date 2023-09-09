@@ -25,6 +25,18 @@
 .review-content .review-name a:hover {
   color: #f00;
 }
+.new-review ul a,
+.tags ul a {
+  color: #333;
+  text-decoration: none;
+  font-size: 1em;
+}
+.new-review ul a:hover {
+  color: #f00;
+}
+.tags ul a:hover {
+  color: #0d6efd;
+}
 
 @media (max-width: 576px) {
   .review-content .review-name a {
