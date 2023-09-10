@@ -31,7 +31,7 @@ $old_avatar = mysqli_fetch_column($result);
 $birth_year = !empty($birth_year) ? intval($birth_year) : 1900;
 
 $path_avatar = $old_avatar;
-if (isset($avatar)) {
+if (is_uploaded_file($avatar['tmp_name'])) {
     remove_file($old_avatar);
     $path_avatar = upload_file($avatar, "assets/images/users/");
 }
@@ -50,6 +50,8 @@ $query = "update users set
 $result = mysqli_query($connect, $query);
 
 
+
+mysqli_close($connect);
 $_SESSION['msg'] = "Cập nhật thông tin tài khoản thành công!";
 header("location:user.php?id=$id");
 exit;

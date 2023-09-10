@@ -18,7 +18,7 @@ if (empty($user)) {
     header("location:404.php");
     exit;
 }
-
+mysqli_close($connect);
 ?>
 <!DOCTYPE html>
 <html lang="en">

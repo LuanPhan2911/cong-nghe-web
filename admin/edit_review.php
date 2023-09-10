@@ -1,11 +1,31 @@
 <?php
 
 require_once "../middleware/session_start.php";
-$brand = "Review Form";
+$brand = "Update Review Form";
 if (!check_admin()) {
     header("location:../");
     exit;
 }
+
+$id = $_GET['id'];
+if (empty($id)) {
+    $_SESSION['err'] = "Mising Story Id to edit Review!";
+    header("location:index.php");
+    exit;
+}
+require_once "../database/connect.php";
+$query = "select * from stories where id='$id'";
+$result = mysqli_query($connect, $query);
+
+$story = mysqli_fetch_array($result);
+if (empty($story)) {
+    $_SESSION['err'] = "Story Not Found to edit!";
+    header("location:index.php");
+    exit;
+}
+
+
+mysqli_close($connect);
 
 ?>
 <!DOCTYPE html>
@@ -31,15 +51,16 @@ if (!check_admin()) {
                     <div class="container">
                         <div class="card">
                             <div class="card-header bg-primary-subtle">
-                                <h3 class="text-center">Create Review Form</h3>
+                                <h3 class="text-center">Update Review Form</h3>
                             </div>
                             <div class="card-body">
-                                <form action="store_review.php" method="post" enctype="multipart/form-data" id="create_review">
+                                <form action="update_review.php" method="post" enctype="multipart/form-data" id="update_review">
                                     <div class="row">
+                                        <input type="hidden" name="id" value="<?php echo $story['id'] ?>">
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="avatar" class="d-flex justify-content-center mb-3 cursor-pointer">
-                                                    <img src="../assets/images/reviews/default.png" class="img-thumbnail img-fluid story-avatar">
+                                                    <img src="<?php echo $story['avatar'] ?>" class="img-thumbnail img-fluid story-avatar">
                                                 </label>
                                                 <div class="fst-italic fw-light text-center">Nhấn vào ảnh trên để thêm ảnh đại diện</div>
                                                 <input class="form-control" name="avatar" type="file" id="avatar" accept="image/*" hidden />
@@ -50,19 +71,19 @@ if (!check_admin()) {
                                                 <span class="input-group-text">
                                                     <i class="bi bi-alt"></i>
                                                 </span>
-                                                <input type="text" class="form-control" placeholder="Story Name" name="name" id="name" value="<?php echo old_value('story_name') ?>">
+                                                <input type="text" class="form-control" placeholder="Story Name" name="name" id="name" value="<?php echo $story['name'] ?>">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text">
                                                     <i class="bi bi-pen"></i>
                                                 </span>
-                                                <input type="text" class="form-control" placeholder="Author Name" name="author_name" id="author_name" <?php echo old_value("author_name") ?>>
+                                                <input type="text" class="form-control" placeholder="Author Name" name="author_name" id="author_name" value="<?php echo $story['author_name'] ?>">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text">
                                                     <i class="bi bi-archive"></i>
                                                 </span>
-                                                <input type="text" class="form-control" placeholder="Genres" name="genres" id="genres" value="<?php echo old_value("genres") ?>">
+                                                <input type="text" class="form-control" placeholder="Genres" name="genres" id="genres" value="<?php echo $story['genres'] ?>">
                                             </div>
 
                                         </div>
@@ -70,17 +91,17 @@ if (!check_admin()) {
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label for="description">Description</label>
-                                            <textarea class="form-control" id="description" rows="5" name="description"><?php echo old_value('description') ?></textarea>
+                                            <textarea class="form-control" id="description" rows="5" name="description"><?php echo $story['description'] ?></textarea>
 
                                         </div>
                                         <div class="mb-3">
                                             <label for="review-content">Review Content</label>
-                                            <textarea class="form-control" id="review-content" rows="5" name="review_content"><?php echo old_value('review_content') ?></textarea>
+                                            <textarea class="form-control" id="review-content" rows="5" name="review_content"><?php echo $story['review_content'] ?></textarea>
 
                                         </div>
                                     </div>
                                     <div class="mb-3 d-flex justify-content-center">
-                                        <button class="btn btn-primary px-5 d-block" type="submit">Create</button>
+                                        <button class="btn btn-primary px-5 d-block" type="submit">Update</button>
                                     </div>
 
                                 </form>
@@ -95,12 +116,13 @@ if (!check_admin()) {
 
 
     <?php require_once "../notify/toast_error.php" ?>
+    <?php require_once "../notify/toast_success.php" ?>
 
     <?php require_once "layouts/script.php" ?>
     <script src="../assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {
-            $("#create_review").validate({
+            $("#update_review").validate({
                 rules: {
                     name: {
                         required: true,

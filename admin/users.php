@@ -31,6 +31,7 @@ $total_page = ceil(intval($total_record) / intval($limit));
 $prev = $page - 1;
 $next = $page + 1;
 
+mysqli_close($connect);
 function generate_src_avatar($avatar)
 {
     if (isset($avatar)) {
@@ -122,9 +123,9 @@ function user_blocked($user)
                                     <td><?php echo $each['created_at'] ?></td>
                                     <td>
                                         <?php if (user_blocked($each)) { ?>
-                                            <a href="./unblock_user.php?id=<?php echo $each['id'] ?>" class="btn btn-success">Unblock</a>
+                                            <a href="block_user.php?id=<?php echo $each['id'] ?>&action=unblock" class="btn btn-success">Unblock</a>
                                         <?php } else {  ?>
-                                            <a href="./block_user.php?id=<?php echo $each['id'] ?>" class="btn btn-warning">Block</a>
+                                            <a href="block_user.php?id=<?php echo $each['id'] ?>&action=block" class="btn btn-warning">Block</a>
                                         <?php } ?>
 
                                     </td>

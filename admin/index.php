@@ -6,6 +6,11 @@ if (!check_admin()) {
     header("location:../");
     exit;
 }
+require_once "../database/connect.php";
+$query = "select * from stories";
+$stories = mysqli_query($connect, $query);
+
+mysqli_close($connect);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +20,12 @@ if (!check_admin()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once "./layouts/styles.php" ?>
     <title>Admin - Index</title>
+    <style>
+        .avatar {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,10 +41,30 @@ if (!check_admin()) {
                     <table class="table table-hover">
                         <thead>
                             <tr>
-
+                                <th>#</th>
+                                <th>AVatar</th>
+                                <th>Name</th>
+                                <th>Author Name</th>
+                                <th>Action</th>
                             </tr>
                         <tbody>
+                            <?php foreach ($stories as $each) { ?>
+                                <tr>
+                                    <td><?php echo $each['id'] ?></td>
+                                    <td>
+                                        <img src="<?php echo $each['avatar'] ?>" alt="" class="avatar">
+                                    </td>
+                                    <td><?php echo $each['name'] ?></td>
+                                    <td><?php echo $each['author_name'] ?></td>
 
+                                    <td>
+                                        <a href='edit_review.php?id=<?php echo $each["id"] ?>' class="btn btn-primary">Edit</a>
+                                        <a href='pinned_review.php?id=<?php echo $each["id"] ?>' class="btn btn-success">Pin</a>
+                                        <a href='hidden_review.php?id=<?php echo $each["id"] ?>' class="btn btn-warning">Hide</a>
+                                        <a href='delete_review.php?id=<?php echo $each["id"] ?>' class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                         </thead>
                     </table>
@@ -45,6 +76,7 @@ if (!check_admin()) {
 
 
     <?php require_once "../notify/toast_success.php" ?>
+    <?php require_once "../notify/toast_error.php" ?>
 
     <?php require_once "./layouts/script.php" ?>
 </body>
