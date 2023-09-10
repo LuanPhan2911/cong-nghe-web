@@ -1,5 +1,5 @@
 <?php
-require_once "./database/connect.php";
+require_once "database/connect.php";
 $id = $_POST['id'];
 $name = $_POST['name'];
 $birth_year = $_POST['birth_year'];
@@ -9,7 +9,7 @@ $avatar = $_FILES['avatar'];
 
 
 //validate
-require_once "./middleware/session_start.php";
+require_once "middleware/session_start.php";
 if (empty($name)) {
     $_SESSION["err"] = "Tên tài khoản không được để trống!";
     header("location:user.php?id=$id");
@@ -22,25 +22,25 @@ if (isset($gender) && !in_array($gender, [0, 1])) {
     exit;
 }
 // update avatar
-require_once "./helper/file_upload.php";
+require_once "helper/file_upload.php";
 
 $query = "select avatar from users where id='$id'";
 $result = mysqli_query($connect, $query);
 $old_avatar = mysqli_fetch_column($result);
 
-$pathAvatar = $old_avatar;
-if (isset($old_avatar) && isset($avatar)) {
+$birth_year = !empty($birth_year) ? intval($birth_year) : 1900;
+
+$path_avatar = $old_avatar;
+if (isset($avatar)) {
     remove_file($old_avatar);
-    $pathAvatar = upload_file($avatar, "users/");
+    $path_avatar = upload_file($avatar, "assets/images/users/");
 }
-
-
 
 // update user
 
 $query = "update users set
     name='$name',
-    avatar='$pathAvatar',
+    avatar='$path_avatar',
     birth_year='$birth_year',
     description='$description',
     gender='$gender'

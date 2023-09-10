@@ -1,10 +1,10 @@
 <?php
-require_once "./database/connect.php";
+require_once "database/connect.php";
 $name = $_POST["name"];
 $email = $_POST["email"];
 $password = $_POST["password"];
 
-require_once "./middleware/session_start.php";
+require_once "middleware/session_start.php";
 if (empty($name) || empty($email) || empty($password)) {
     $_SESSION["err"] = "Một vài trường dữ liệu bị trống!";
 

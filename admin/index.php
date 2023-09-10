@@ -1,8 +1,8 @@
 <?php
 require_once "../middleware/session_start.php";
 $brand = "Home";
-$check_admin = isset($_SESSION["id"]) &&  isset($_SESSION["role"]) && $_SESSION['role'] === true;
-if (!$check_admin) {
+
+if (!check_admin()) {
     header("location:../");
     exit;
 }
@@ -26,7 +26,17 @@ if (!$check_admin) {
                     <?php require_once "./layouts/navbar.php" ?>
                 </header>
                 <main>
+                    <a href="./create_review.php" class="btn btn-success">Create Review</a>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
 
+                            </tr>
+                        <tbody>
+
+                        </tbody>
+                        </thead>
+                    </table>
                 </main>
             </div>
         </div>
@@ -34,7 +44,7 @@ if (!$check_admin) {
 
 
 
-
+    <?php require_once "../notify/toast_success.php" ?>
 
     <?php require_once "./layouts/script.php" ?>
 </body>

@@ -13,5 +13,8 @@ deleted_at=null
 where 
 id='$id'
 ";
-mysqli_query($connect, $query);
+$result = mysqli_query($connect, $query);
+if (isset($result)) {
+    $_SESSION["msg"] = "Unblock User Success!";
+}
 header("location:users.php");

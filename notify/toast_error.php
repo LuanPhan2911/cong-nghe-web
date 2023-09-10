@@ -1,5 +1,4 @@
 <?php
-require_once "./helper/session_flash.php";
 if (isset($_SESSION["err"])) {
 ?>
     <div class="toast-container position-fixed bottom-0 end-0 p-3 ">

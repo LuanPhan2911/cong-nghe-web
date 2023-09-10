@@ -1,8 +1,7 @@
 <?php
 require_once "../middleware/session_start.php";
 $brand = "Reports";
-$check_admin = isset($_SESSION["id"]) &&  isset($_SESSION["role"]) && $_SESSION['role'] === true;
-if (!$check_admin) {
+if (!check_admin()) {
     header("location:../");
     exit;
 }

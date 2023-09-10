@@ -26,7 +26,7 @@
 
                         <p>the page you are looking for not avaible!</p>
 
-                        <a href="./" class="btn btn-success">Go to Home</a>
+                        <a href="/" class="btn btn-success">Go to Home</a>
                     </div>
 
                 </div>

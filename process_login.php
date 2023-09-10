@@ -1,10 +1,10 @@
 <?php
-require_once "./database/connect.php";
+require_once "database/connect.php";
 $email = $_POST["email"];
 $password = $_POST["password"];
 
 $errorMessage = "Email hoặc mật khẩu không đúng";
-require_once "./middleware/session_start.php";
+require_once "middleware/session_start.php";
 if (empty($email) || empty($password)) {
     $_SESSION["err"] = $errorMessage;
     header("location:login.php");

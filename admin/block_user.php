@@ -13,5 +13,10 @@ deleted_at=CURRENT_TIME()
 where 
 id='$id'
 ";
-mysqli_query($connect, $query);
+$result = mysqli_query($connect, $query);
+if (isset($result)) {
+    $_SESSION["msg"] = "Block User Success!";
+}
+
 header("location:users.php");
+exit;

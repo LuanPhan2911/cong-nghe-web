@@ -1,6 +1,6 @@
 <?php
-require_once "./middleware/check_login.php";
-require_once "./database/connect.php";
+require_once "middleware/session_start.php";
+require_once "database/connect.php";
 if (!check_login()) {
     header("location:login.php");
     exit;
@@ -26,7 +26,7 @@ if (empty($user)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once "layouts/styles.php" ?>
     <title>Hồ sơ</title>
     <style>
         .user-avatar {
@@ -38,8 +38,8 @@ if (empty($user)) {
 </head>
 
 <body>
-    <?php require_once "./layouts/header.php" ?>
-    <?php require_once "./helper/asset.php" ?>
+    <?php require_once "layouts/header.php" ?>
+    <?php require_once "helper/asset.php" ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -49,13 +49,13 @@ if (empty($user)) {
                             <h3 class="text-center">Hồ sơ</h3>
                         </div>
                         <div class="card-body">
-                            <form action="./update_user.php" method="post" enctype="multipart/form-data" id="update_user">
+                            <form action="update_user.php" method="post" enctype="multipart/form-data" id="update_user">
                                 <input type="text" hidden name="id" value="<?php echo $_GET['id'] ?>">
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="avatar" class="d-flex justify-content-center mb-3 cursor-pointer">
-                                                <img src="<?php isset($user['avatar']) ? asset($user['avatar']) : asset('/users/default.webp')  ?>" class="rounded-circle img-thumbnail user-avatar">
+                                                <img src="<?php isset($user['avatar']) ? asset($user['avatar']) : asset('assets/images/users/default.webp')  ?>" class="rounded-circle img-thumbnail user-avatar">
                                             </label>
                                             <div class="fst-italic fw-light text-center">Nhấn vào ảnh trên để cập nhật ảnh đại diện</div>
                                             <input class="form-control" name="avatar" type="file" id="avatar" accept="image/*" hidden />
@@ -117,13 +117,13 @@ if (empty($user)) {
 
         </div>
         <?php
-        require_once "./notify/toast_success.php";
-        require_once "./notify/toast_error.php";
+        require_once "notify/toast_success.php";
+        require_once "notify/toast_error.php";
         ?>
 
     </main>
-    <?php require_once "./layouts/footer.php" ?>
-    <?php require_once "./layouts/script.php" ?>
+    <?php require_once "layouts/footer.php" ?>
+    <?php require_once "layouts/script.php" ?>
     <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

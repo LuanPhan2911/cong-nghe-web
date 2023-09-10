@@ -1,6 +1,5 @@
 <?php
-require_once "./middleware/session_start.php";
-require_once "./helper/session_flash.php";
+require_once "middleware/session_start.php";
 if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
     header("location:");
 }
@@ -18,7 +17,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
 
 <body>
 
-    <?php require_once "./layouts/header.php" ?>
+    <?php require_once "layouts/header.php" ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -28,7 +27,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
                             <h3 class="text-center">Login</h3>
                         </div>
                         <div class="card-body">
-                            <form action="./process_login.php" method="post" id="login_form">
+                            <form action="process_login.php" method="post" id="login_form">
                                 <div class="mb-3 row">
                                     <label for="email" class="col-sm-3 col-form-label">Email</label>
                                     <div class="col-sm-9">
@@ -47,7 +46,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
                                 </div>
                                 <div class="mb-3">
                                     <p class="text-center">Bạn chưa có tài khoản?
-                                        <a href="./register.php" class="link-primary text-decoration-none">Đăng ký</a>
+                                        <a href="register.php" class="link-primary text-decoration-none">Đăng ký</a>
                                     </p>
                                 </div>
                             </form>
@@ -61,12 +60,12 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
 
         </div>
         <?php
-        require_once "./notify/toast_error.php"
+        require_once "notify/toast_error.php"
         ?>
 
     </main>
-    <?php require_once "./layouts/footer.php" ?>
-    <?php require_once "./layouts/script.php" ?>
+    <?php require_once "layouts/footer.php" ?>
+    <?php require_once "layouts/script.php" ?>
     <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

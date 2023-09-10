@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once "layouts/styles.php" ?>
     <link rel="stylesheet" href="assets/css/home.css">
     <title>Trang chủ</title>
 </head>
 
 <body>
-    <?php require_once "./layouts/header.php" ?>
+    <?php require_once "layouts/header.php" ?>
     <main>
         <div class="container">
             <div class="row">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-8">
                                     <div class="review-name">
-                                        <a href="./review.php"> Review truyen vuong gia trong sinh</a>
+                                        <a href="/review.php"> Review truyen vuong gia trong sinh</a>
                                     </div>
                                     <div class="author-name">
                                         <i class="bi bi-pen"></i>
@@ -166,13 +166,13 @@
             </div>
         </div>
 
-        <?php require_once "./notify/toast_success.php" ?>
+        <?php require_once "notify/toast_success.php" ?>
     </main>
-    <?php require_once "./layouts/footer.php" ?>
+    <?php require_once "layouts/footer.php" ?>
 
 
 
-    <?php require_once "./layouts/script.php" ?>
+    <?php require_once "layouts/script.php" ?>
 
 
 </body>

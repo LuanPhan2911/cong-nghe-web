@@ -4,8 +4,7 @@ require_once "../helper/asset.php";
 
 
 $brand = "Users";
-$check_admin = isset($_SESSION["id"]) &&  isset($_SESSION["role"]) && $_SESSION['role'] === true;
-if (!$check_admin) {
+if (!check_admin()) {
     header("location:../");
     exit;
 }
@@ -159,7 +158,8 @@ function user_blocked($user)
     </div>
 
 
-
+    <?php require_once "../notify/toast_success.php" ?>
+    <?php require_once "../notify/toast_error.php" ?>
 
 
     <?php require_once "./layouts/script.php" ?>

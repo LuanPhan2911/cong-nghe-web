@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once "layouts/styles.php" ?>
     <title>Đăng ký</title>
 </head>
 
 <body>
-    <?php require_once "./layouts/header.php" ?>
-    <?php require_once "./helper/session_flash.php" ?>
+    <?php require_once "middleware/session_start.php"; ?>
+    <?php require_once "layouts/header.php" ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -20,7 +20,7 @@
                             <h3 class="text-center">Đăng ký</h3>
                         </div>
                         <div class="card-body">
-                            <form action="./process_register.php" method="post" id="register_form">
+                            <form action="process_register.php" method="post" id="register_form">
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-3 col-form-label">Tên đăng nhập</label>
                                     <div class="col-sm-9">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <p class="text-center">Bạn đã có tài khoản?
-                                        <a href="./login.php" class="link-primary text-decoration-none">Đăng nhập</a>
+                                        <a href="login.php" class="link-primary text-decoration-none">Đăng nhập</a>
                                     </p>
                                 </div>
                             </form>
@@ -65,11 +65,11 @@
 
             </div>
             <?php
-            require_once "./notify/toast_error.php";
+            require_once "notify/toast_error.php";
             ?>
     </main>
-    <?php require_once "./layouts/footer.php" ?>
-    <?php require_once "./layouts/script.php" ?>
+    <?php require_once "layouts/footer.php" ?>
+    <?php require_once "layouts/script.php" ?>
     <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

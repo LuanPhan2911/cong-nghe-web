@@ -2,9 +2,7 @@
     <div class="container">
         <nav class="navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="./">Review Truyện</a>
-
-
+                <a class="navbar-brand" href="/">Review Truyện</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -16,15 +14,14 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <form class="d-flex mb-3" method="get" action="./search.php">
+                                <form class="d-flex mb-3" method="get" action="search.php">
                                     <input class="form-control mx-2" type="search" placeholder="Search" name="q">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </form>
                             </li>
                             <?php
-                            require_once "./middleware/check_login.php";
+                            require_once "middleware/session_start.php";
                             if (check_login()) {
-
                             ?>
                                 <li class="nav-item">
                                     <div class="d-flex justify-content-around align-items-center">
@@ -33,19 +30,19 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./user.php?id=<?php echo $_SESSION["id"] ?>" class="nav-link">Hồ sơ</a>
+                                    <a href="user.php?id=<?php echo $_SESSION["id"] ?>" class="nav-link">Hồ sơ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./logout.php" class="nav-link">Thoát</a>
+                                    <a href="logout.php" class="nav-link">Thoát</a>
                                 </li>
                             <?php
                             } else {
                             ?>
                                 <li class="nav-item">
-                                    <a class="nav-link px-2" href="./login.php">Đăng nhập</a>
+                                    <a class="nav-link px-2" href="login.php">Đăng nhập</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link px-2" href="./register.php">Đăng kí</a>
+                                    <a class="nav-link px-2" href="register.php">Đăng kí</a>
                                 </li>
                             <?php
                             }
