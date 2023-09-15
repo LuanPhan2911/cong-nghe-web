@@ -1,26 +1,27 @@
 <?php
 
-require_once "../middleware/session_start.php";
+require_once __DIR__ . "/../middleware/session.php";
+require_once __DIR__ . "/../database/connect.php";
 $brand = "Update Review Form";
 if (!check_admin()) {
-    header("location:../");
+    header("location:../index.php");
     exit;
 }
 
 $id = $_GET['id'];
 if (empty($id)) {
     $_SESSION['err'] = "Mising Story Id to edit Review!";
-    header("location:index.php");
+    header("location:./index.php");
     exit;
 }
-require_once "../database/connect.php";
+
 $query = "select * from stories where id='$id'";
 $result = mysqli_query($connect, $query);
 
 $story = mysqli_fetch_array($result);
 if (empty($story)) {
     $_SESSION['err'] = "Story Not Found to edit!";
-    header("location:index.php");
+    header("location:./index.php");
     exit;
 }
 
@@ -34,7 +35,7 @@ mysqli_close($connect);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once __DIR__ . "/layouts/styles.php" ?>
     <title>Admin - <?php echo "$brand"  ?></title>
 
 </head>
@@ -42,10 +43,10 @@ mysqli_close($connect);
 <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <?php require_once "./layouts/sidebar.php" ?>
+            <?php require_once __DIR__ . "/layouts/sidebar.php" ?>
             <div class="col">
                 <header>
-                    <?php require_once "./layouts/navbar.php" ?>
+                    <?php require_once __DIR__ . "/layouts/navbar.php" ?>
                 </header>
                 <main>
                     <div class="container">
@@ -60,7 +61,7 @@ mysqli_close($connect);
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="avatar" class="d-flex justify-content-center mb-3 cursor-pointer">
-                                                    <img src="<?php echo $story['avatar'] ?>" class="img-thumbnail img-fluid story-avatar">
+                                                    <img src='<?= "../assets/images/" . $story['avatar'] ?>' class="img-thumbnail img-fluid story-avatar">
                                                 </label>
                                                 <div class="fst-italic fw-light text-center">Nhấn vào ảnh trên để thêm ảnh đại diện</div>
                                                 <input class="form-control" name="avatar" type="file" id="avatar" accept="image/*" hidden />
@@ -115,10 +116,10 @@ mysqli_close($connect);
 
 
 
-    <?php require_once "../notify/toast_error.php" ?>
-    <?php require_once "../notify/toast_success.php" ?>
+    <?php require_once __DIR__ . "/../layouts/toast_error.php" ?>
+    <?php require_once __DIR__ . "/../layouts/toast_success.php" ?>
 
-    <?php require_once "layouts/script.php" ?>
+    <?php require_once __DIR__ . "/layouts/script.php" ?>
     <script src="../assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

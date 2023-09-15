@@ -1,6 +1,7 @@
 <?php
-require_once "../middleware/session_start.php";
-require "../database/connect.php";
+require_once __DIR__ . "/../middleware/session.php";
+require __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../helper/helper.php";
 $name = $_POST['name'];
 $author_name = $_POST['author_name'];
 $description = $_POST['description'];
@@ -25,8 +26,8 @@ if (!is_uploaded_file($avatar['tmp_name'])) {
     header("location:create_review.php");
     exit;
 }
-require_once "../helper/file_upload.php";
-$path_avatar = upload_file($avatar, "../assets/images/reviews/");
+
+$path_avatar = upload_file($avatar, "reviews/");
 $query = "insert into stories(name, author_name, description, review_content, genres, avatar)
 values('$name', '$author_name', '$description', '$review_content', '$genres', '$path_avatar')";
 

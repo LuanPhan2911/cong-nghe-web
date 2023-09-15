@@ -1,12 +1,12 @@
 <?php
-require_once "middleware/session_start.php";
-require_once "database/connect.php";
+require_once __DIR__ . "/middleware/session.php";
+require_once __DIR__ . "/database/connect.php";
 if (!check_login()) {
-    header("location:login.php");
+    header("location:/login.php");
     exit;
 }
 if (empty($_GET["id"])) {
-    header("location:404.php");
+    header("location:/404.php");
     exit;
 }
 $user_id = $_GET["id"];
@@ -15,9 +15,11 @@ $result = mysqli_query($connect, $query);
 $user = mysqli_fetch_array($result);
 
 if (empty($user)) {
-    header("location:404.php");
+    header("location:/404.php");
     exit;
 }
+
+
 mysqli_close($connect);
 ?>
 <!DOCTYPE html>
@@ -26,7 +28,7 @@ mysqli_close($connect);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "layouts/styles.php" ?>
+    <?php require_once __DIR__ . "/layouts/styles.php" ?>
     <title>Hồ sơ</title>
     <style>
         .user-avatar {
@@ -38,8 +40,8 @@ mysqli_close($connect);
 </head>
 
 <body>
-    <?php require_once "layouts/header.php" ?>
-    <?php require_once "helper/asset.php" ?>
+    <?php require_once __DIR__ . "/layouts/header.php" ?>
+    <?php require_once __DIR__ . "/helper/helper.php" ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -49,13 +51,17 @@ mysqli_close($connect);
                             <h3 class="text-center">Hồ sơ</h3>
                         </div>
                         <div class="card-body">
-                            <form action="update_user.php" method="post" enctype="multipart/form-data" id="update_user">
+                            <form action="/auth/update_user.php" method="post" enctype="multipart/form-data" id="update_user">
                                 <input type="text" hidden name="id" value="<?php echo $_GET['id'] ?>">
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="mb-3">
+                                            <?php
+                                            $path = $user['avatar'] ?? "users/default.webp";
+                                            $avatar =  "/assets/images/" . $path;
+                                            ?>
                                             <label for="avatar" class="d-flex justify-content-center mb-3 cursor-pointer">
-                                                <img src="<?php isset($user['avatar']) ? asset($user['avatar']) : asset('assets/images/users/default.webp')  ?>" class="rounded-circle img-thumbnail user-avatar">
+                                                <img src='<?= $avatar ?>' class="rounded-circle img-thumbnail user-avatar">
                                             </label>
                                             <div class="fst-italic fw-light text-center">Nhấn vào ảnh trên để cập nhật ảnh đại diện</div>
                                             <input class="form-control" name="avatar" type="file" id="avatar" accept="image/*" hidden />
@@ -91,7 +97,7 @@ mysqli_close($connect);
                                         <div class="mb-3 row">
                                             <label for="description" class="col-sm-3 col-form-label">Giới thiệu ngắn</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" name="description" id="description" value="<?php echo $user['description'] ?>"></textarea>
+                                                <textarea class="form-control" name="description" id="description"><?= $user['description'] ?></textarea>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -117,13 +123,13 @@ mysqli_close($connect);
 
         </div>
         <?php
-        require_once "notify/toast_success.php";
-        require_once "notify/toast_error.php";
+        require_once __DIR__ . "/layouts/toast_success.php";
+        require_once __DIR__ . "/layouts/toast_error.php";
         ?>
 
     </main>
-    <?php require_once "layouts/footer.php" ?>
-    <?php require_once "layouts/script.php" ?>
+    <?php require_once __DIR__ . "/layouts/footer.php" ?>
+    <?php require_once __DIR__ . "/layouts/script.php" ?>
     <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

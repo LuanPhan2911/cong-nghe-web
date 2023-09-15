@@ -1,9 +1,9 @@
 <?php
 
-require_once "../middleware/session_start.php";
+require_once __DIR__ . "/../middleware/session.php";
 $brand = "Review Form";
 if (!check_admin()) {
-    header("location:../");
+    header("location:../index.php");
     exit;
 }
 
@@ -14,7 +14,7 @@ if (!check_admin()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once __DIR__ . "/layouts/styles.php" ?>
     <title>Admin - <?php echo "$brand"  ?></title>
 
 </head>
@@ -22,10 +22,10 @@ if (!check_admin()) {
 <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <?php require_once "./layouts/sidebar.php" ?>
+            <?php require_once __DIR__ . "/layouts/sidebar.php" ?>
             <div class="col">
                 <header>
-                    <?php require_once "./layouts/navbar.php" ?>
+                    <?php require_once __DIR__ . "/layouts/navbar.php" ?>
                 </header>
                 <main>
                     <div class="container">
@@ -94,9 +94,9 @@ if (!check_admin()) {
 
 
 
-    <?php require_once "../notify/toast_error.php" ?>
+    <?php require_once __DIR__ . "/../layouts/toast_error.php" ?>
 
-    <?php require_once "layouts/script.php" ?>
+    <?php require_once __DIR__ . "/layouts/script.php" ?>
     <script src="../assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

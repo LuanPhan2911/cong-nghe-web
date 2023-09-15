@@ -1,7 +1,7 @@
 <?php
-require_once "middleware/session_start.php";
+require_once __DIR__ . "/middleware/session.php";
 if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
-    header("location:");
+    header("location:/");
 }
 ?>
 <!DOCTYPE html>
@@ -10,14 +10,14 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once  __DIR__ . "/layouts/styles.php" ?>
 
     <title>Đăng nhập</title>
 </head>
 
 <body>
 
-    <?php require_once "layouts/header.php" ?>
+    <?php require_once __DIR__ . "/layouts/header.php" ?>
     <main>
         <div class="container">
             <div class="row justify-content-center">
@@ -27,7 +27,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
                             <h3 class="text-center">Login</h3>
                         </div>
                         <div class="card-body">
-                            <form action="process_login.php" method="post" id="login_form">
+                            <form action="/auth/process_login.php" method="post" id="login_form">
                                 <div class="mb-3 row">
                                     <label for="email" class="col-sm-3 col-form-label">Email</label>
                                     <div class="col-sm-9">
@@ -59,13 +59,11 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
 
 
         </div>
-        <?php
-        require_once "notify/toast_error.php"
-        ?>
+        <?php require_once __DIR__ . "/layouts/toast_error.php" ?>
 
     </main>
-    <?php require_once "layouts/footer.php" ?>
-    <?php require_once "layouts/script.php" ?>
+    <?php require_once __DIR__ . "/layouts/footer.php" ?>
+    <?php require_once __DIR__ . "/layouts/script.php" ?>
     <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {

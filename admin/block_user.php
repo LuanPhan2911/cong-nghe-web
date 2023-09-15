@@ -1,10 +1,10 @@
 <?php
-require_once "../database/connect.php";
-require_once "../middleware/session_start.php";
+require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../middleware/session.php";
 $id = $_GET['id'];
 $action = $_GET['action'];
 if (empty($id) || empty($action)) {
-    header("location:users.php");
+    header("location:/user.php");
     exit;
 }
 $update_value = $action == "block" ? 'CURRENT_TIME()' : 'NULL';
@@ -22,5 +22,5 @@ if (isset($result)) {
 
 mysqli_close($connect);
 
-header("location:users.php");
+header("location:/users.php");
 exit;

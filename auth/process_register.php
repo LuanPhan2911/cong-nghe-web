@@ -1,16 +1,17 @@
 <?php
-require_once "database/connect.php";
+require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../middleware/session.php";
 $name = $_POST["name"];
 $email = $_POST["email"];
 $password = $_POST["password"];
 
-require_once "middleware/session_start.php";
+
 if (empty($name) || empty($email) || empty($password)) {
     $_SESSION["err"] = "Một vài trường dữ liệu bị trống!";
 
     $_SESSION["name"] = $name;
     $_SESSION["email"] = $email;
-    header("location:register.php");
+    header("location:../register.php");
     exit;
 }
 
@@ -25,7 +26,7 @@ if (isset($data_email)) {
     $_SESSION["name"] = $name;
     $_SESSION["email"] = $email;
 
-    header("location:register.php");
+    header("location:../register.php");
     exit;
 }
 
@@ -36,13 +37,13 @@ $query = "insert into users(name, email, password)
 $result = mysqli_query($connect, $query);
 
 if (isset($result)) {
-    require_once "./middleware/session_start.php";
+
     $_SESSION["name"] = $name;
     $_SESSION["role"] = 0;
     $_SESSION['id'] = mysqli_insert_id($connect);
 
     $_SESSION["msg"] = "Bạn đã đăng ký thành công!";
-    header("location:/");
+    header("location:../index.php");
 }
 
 

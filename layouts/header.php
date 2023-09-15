@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . "/../middleware/session.php"; ?>
 <header>
     <div class="container">
         <nav class="navbar">
@@ -20,7 +21,7 @@
                                 </form>
                             </li>
                             <?php
-                            require_once "middleware/session_start.php";
+
                             if (check_login()) {
                             ?>
                                 <li class="nav-item">

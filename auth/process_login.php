@@ -1,13 +1,14 @@
 <?php
-require_once "database/connect.php";
+require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../middleware/session.php";
 $email = $_POST["email"];
 $password = $_POST["password"];
 
 $errorMessage = "Email hoặc mật khẩu không đúng";
-require_once "middleware/session_start.php";
+
 if (empty($email) || empty($password)) {
     $_SESSION["err"] = $errorMessage;
-    header("location:login.php");
+    header("location:../login.php");
     exit;
 }
 
@@ -22,7 +23,7 @@ if (isset($data)) {
     if (!password_verify($password, $password_hash)) {
         $_SESSION["err"] = $errorMessage;
         $_SESSION["email"] = $email;
-        header("location:login.php");
+        header("location:../login.php");
         exit;
     }
 
@@ -36,17 +37,17 @@ if (isset($data)) {
     if ($role === true) {
 
         $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
-        header("location:admin/");
+        header("location:../admin/index.php");
         exit;
     } else {
         $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
-        header("location:/");
+        header("location:../index.php");
         exit;
     }
 } else {
     $_SESSION["err"] = $errorMessage;
     $_SESSION["email"] = $email;
-    header("location:login.php");
+    header("location:../login.php");
     exit;
 }
 

@@ -1,15 +1,15 @@
 <?php
-require_once "../middleware/session_start.php";
-require_once "../helper/asset.php";
-
+require_once __DIR__ . "/../middleware/session.php";
+require_once __DIR__ . "/../helper/helper.php";
+require_once __DIR__ . "/../database/connect.php";
 
 $brand = "Users";
 if (!check_admin()) {
-    header("location:../");
+    header("location:../index.php");
     exit;
 }
 
-require_once "../database/connect.php";
+
 
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -76,7 +76,7 @@ function user_blocked($user)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once "./layouts/styles.php" ?>
+    <?php require_once __DIR__ . "/layouts/styles.php" ?>
     <title>Admin - Users</title>
     <style>
         .avatar {
@@ -89,10 +89,10 @@ function user_blocked($user)
 <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <?php require_once "./layouts/sidebar.php" ?>
+            <?php require_once __DIR__ . "/layouts/sidebar.php" ?>
             <div class="col">
                 <header>
-                    <?php require_once "./layouts/navbar.php" ?>
+                    <?php require_once __DIR__ . "/layouts/navbar.php" ?>
                 </header>
                 <main>
                     <table class="table table-hover">
@@ -114,7 +114,7 @@ function user_blocked($user)
                                 <tr class="<?php if (user_blocked($each))  echo 'table-warning' ?>">
                                     <td><?php echo $each['id'] ?></td>
                                     <td>
-                                        <img src="<?php echo generate_src_avatar($each['avatar']) ?>" alt="" class="img-thumbnail avatar rounded-circle">
+                                        <img src="<?= generate_src_avatar($each['avatar']) ?>" alt="" class="img-thumbnail avatar rounded-circle">
                                     </td>
                                     <td><?php echo $each['name'] ?></td>
                                     <td><?php echo $each['email'] ?></td>
@@ -159,11 +159,11 @@ function user_blocked($user)
     </div>
 
 
-    <?php require_once "../notify/toast_success.php" ?>
-    <?php require_once "../notify/toast_error.php" ?>
+    <?php require_once __DIR__ . "/../layouts/toast_success.php" ?>
+    <?php require_once __DIR__ . "/../layouts/toast_error.php" ?>
 
 
-    <?php require_once "./layouts/script.php" ?>
+    <?php require_once __DIR__ . "/layouts/script.php" ?>
 </body>
 
 </html>
