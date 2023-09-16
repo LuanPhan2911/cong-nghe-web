@@ -11,6 +11,12 @@ require_once __DIR__ . "/../database/connect.php";
 $query = "select * from stories";
 $stories = mysqli_query($connect, $query);
 
+function is_pinned($pinned)
+{
+    return $pinned === '0';
+}
+
+
 mysqli_close($connect);
 ?>
 <!DOCTYPE html>
@@ -61,10 +67,20 @@ mysqli_close($connect);
                                     <td><?php echo $each['author_name'] ?></td>
 
                                     <td>
+
                                         <a href='edit_review.php?id=<?= $each["id"] ?>' class="btn btn-primary">Edit</a>
-                                        <a href='pinned_review.php?id=<?= $each["id"] ?>' class="btn btn-success">Pin</a>
-                                        <a href='hidden_review.php?id=<?= $each["id"] ?>' class="btn btn-warning">Hide</a>
-                                        <a href='delete_review.php?id=<?= $each["id"] ?>' class="btn btn-danger">Delete</a>
+                                        <?php if (is_pinned($each['pinned'])) : ?>
+                                            <a href='reviews/pinned_review.php?id=<?= $each["id"] ?>&action=<?= "pin" ?>' class="btn btn-success">Pin</a>
+                                        <?php else : ?>
+                                            <a href='reviews/pinned_review.php?id=<?= $each["id"] ?>&action=<?= "unpin" ?>' class="btn btn-success">Unpin</a>
+                                        <?php endif;  ?>
+                                        <?php if ($each['deleted_at'] === NULL) : ?>
+                                            <a href='reviews/hidden_review.php?id=<?= $each["id"] ?>&action=<?= "hide" ?>' class="btn btn-warning">Hide</a>
+                                        <?php else : ?>
+                                            <a href='reviews/hidden_review.php?id=<?= $each["id"] ?>&action=<?= "show" ?>' class="btn btn-warning">Show</a>
+                                        <?php endif;  ?>
+
+                                        <a href='reviews/delete_review.php?id=<?= $each["id"] ?>' class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             <?php } ?>

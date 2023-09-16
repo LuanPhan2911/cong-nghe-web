@@ -112,20 +112,20 @@ function user_blocked($user)
                         <tbody>
                             <?php foreach ($users as $each) { ?>
                                 <tr class="<?php if (user_blocked($each))  echo 'table-warning' ?>">
-                                    <td><?php echo $each['id'] ?></td>
+                                    <td><?= $each['id'] ?></td>
                                     <td>
                                         <img src="<?= generate_src_avatar($each['avatar']) ?>" alt="" class="img-thumbnail avatar rounded-circle">
                                     </td>
-                                    <td><?php echo $each['name'] ?></td>
-                                    <td><?php echo $each['email'] ?></td>
-                                    <td><?php echo generate_birth_year($each['birth_year']) ?></td>
-                                    <td><?php echo generate_gender($each['gender']) ?></td>
-                                    <td><?php echo $each['created_at'] ?></td>
+                                    <td><?= $each['name'] ?></td>
+                                    <td><?= $each['email'] ?></td>
+                                    <td><?= generate_birth_year($each['birth_year']) ?></td>
+                                    <td><?= generate_gender($each['gender']) ?></td>
+                                    <td><?= $each['created_at'] ?></td>
                                     <td>
                                         <?php if (user_blocked($each)) { ?>
-                                            <a href="block_user.php?id=<?php echo $each['id'] ?>&action=unblock" class="btn btn-success">Unblock</a>
+                                            <a href="users/block_user.php?id=<?= $each['id'] ?>&action=unblock" class="btn btn-success">Unblock</a>
                                         <?php } else {  ?>
-                                            <a href="block_user.php?id=<?php echo $each['id'] ?>&action=block" class="btn btn-warning">Block</a>
+                                            <a href="users/block_user.php?id=<?= $each['id'] ?>&action=block" class="btn btn-warning">Block</a>
                                         <?php } ?>
 
                                     </td>
@@ -137,17 +137,17 @@ function user_blocked($user)
                     <nav>
                         <ul class="pagination justify-content-center">
                             <li class="page-item <?php if ($page <= 1) echo 'disabled' ?>">
-                                <a class="page-link" href="<?php echo generate_link_prev($page, $prev) ?>" aria-label="Previous">
+                                <a class="page-link" href="<?= generate_link_prev($page, $prev) ?>" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <?php for ($i = 1; $i <= $total_page; $i++) : ?>
                                 <li class="page-item <?php if ($page == $i)  echo 'active'; ?>">
-                                    <a class="page-link" href='<?php echo "?page=$i" ?>'> <?php echo $i ?> </a>
+                                    <a class="page-link" href='<?= "?page=$i" ?>'> <?= $i ?> </a>
                                 </li>
                             <?php endfor; ?>
                             <li class="page-item <?php if ($page >= $total_page) echo 'disabled' ?>">
-                                <a class="page-link" href="<?php echo generate_link_next($page, $next, $total_page) ?>" aria-label="Next">
+                                <a class="page-link" href="<?= generate_link_next($page, $next, $total_page) ?>" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

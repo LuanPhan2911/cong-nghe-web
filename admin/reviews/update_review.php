@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . "/../middleware/session.php";
-require __DIR__ . "/../database/connect.php";
-require_once __DIR__ . "/../helper/helper.php";
+require_once __DIR__ . "/../../middleware/session.php";
+require __DIR__ . "/../../database/connect.php";
+require_once __DIR__ . "/../../helper/helper.php";
 $id = $_POST['id'];
 $name = $_POST['name'];
 $author_name = $_POST['author_name'];
@@ -17,7 +17,7 @@ $_SESSION['genres'] = $genres;
 if (empty($name) || empty($author_name) || empty($description) || empty($review_content) || empty($genres) || empty($id)) {
     $_SESSION['err'] = "Missing some field data!";
 
-    header("location:edit_review.php?id=$id");
+    header("location:../edit_review.php?id=$id");
     exit;
 }
 
@@ -45,5 +45,5 @@ mysqli_query($connect, $query);
 
 
 $_SESSION['msg'] = "Update Review Success!";
-header("location:edit_review.php?id=$id");
+header("location:../edit_review.php?id=$id");
 exit;

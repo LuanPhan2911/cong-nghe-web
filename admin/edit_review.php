@@ -55,7 +55,7 @@ mysqli_close($connect);
                                 <h3 class="text-center">Update Review Form</h3>
                             </div>
                             <div class="card-body">
-                                <form action="update_review.php" method="post" enctype="multipart/form-data" id="update_review">
+                                <form action="reviews/update_review.php" method="post" enctype="multipart/form-data" id="update_review">
                                     <div class="row">
                                         <input type="hidden" name="id" value="<?php echo $story['id'] ?>">
                                         <div class="col-lg-4">

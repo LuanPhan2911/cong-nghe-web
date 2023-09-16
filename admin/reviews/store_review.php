@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . "/../middleware/session.php";
-require __DIR__ . "/../database/connect.php";
-require_once __DIR__ . "/../helper/helper.php";
+require_once __DIR__ . "/../../middleware/session.php";
+require __DIR__ . "/../../database/connect.php";
+require_once __DIR__ . "/../../helper/helper.php";
 $name = $_POST['name'];
 $author_name = $_POST['author_name'];
 $description = $_POST['description'];
@@ -15,15 +15,12 @@ $_SESSION['author_name'] = $author_name;
 $_SESSION['genres'] = $genres;
 if (empty($name) || empty($author_name) || empty($description) || empty($review_content) || empty($genres)) {
     $_SESSION['err'] = "Missing some field data!";
-
-
-
-    header("location:create_review.php");
+    header("location:../create_review.php");
     exit;
 }
 if (!is_uploaded_file($avatar['tmp_name'])) {
     $_SESSION['err'] = "Missing avatar!";
-    header("location:create_review.php");
+    header("location:../create_review.php");
     exit;
 }
 
@@ -36,5 +33,5 @@ mysqli_query($connect, $query);
 
 mysqli_close($connect);
 $_SESSION['msg'] = "Create Review Success!";
-header("location:index.php");
+header("location:../index.php");
 exit;

@@ -142,12 +142,16 @@ mysqli_close($connect);
                     birth_year: {
                         min: 1900,
                         max: (new Date()).getFullYear(),
+                        required: true
                     },
                     description: {
                         maxlength: 255,
+                        required: true,
                     },
                     avatar: {
-                        accept: "image/"
+                        required: true,
+                        accept: "image/",
+
                     }
                 },
                 messages: {
@@ -156,13 +160,16 @@ mysqli_close($connect);
                     },
                     birth_year: {
                         min: "Năm sinh tối thiểu là 1900!",
-                        max: `Năm sinh tối đa là ${(new Date()).getFullYear()}`
+                        max: `Năm sinh tối đa là ${(new Date()).getFullYear()}`,
+                        required: "Bạn chưa nhập năm sinh!"
                     },
                     avatar: {
-                        accept: "Bạn chọn file phải là ảnh!"
+                        accept: "Bạn chọn file phải là ảnh!",
+                        required: "Bạn chưa chọn ảnh đại diện"
                     },
                     description: {
-                        maxlength: "Giới thiệu ngắn tối đa 255 kí tự!"
+                        maxlength: "Giới thiệu ngắn tối đa 255 kí tự!",
+                        required: "Bạn chưa viết đoạn giới thiệu!"
                     }
                 },
                 errorElement: "div",

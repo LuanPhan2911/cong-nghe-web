@@ -3,11 +3,12 @@ require_once __DIR__ . "/../database/connect.php";
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
 
+
 $id = $_POST['id'];
 $name = $_POST['name'];
 $birth_year = $_POST['birth_year'];
 $gender = $_POST['gender'];
-$description = $_POST['description'];
+$description = $_POST['description'] ?? '';
 $avatar = $_FILES['avatar'];
 
 
@@ -24,6 +25,12 @@ if (isset($gender) && !in_array($gender, [0, 1])) {
     header("location:../user.php?id=$id");
     exit;
 }
+if (!is_uploaded_file($avatar['tmp_name'])) {
+    $_SESSION["err"] = "Chưa cập nhật ảnh đại diện!";
+    header("location:../user.php?id=$id");
+    exit;
+}
+
 // update avatar
 
 
@@ -33,13 +40,17 @@ $old_avatar = mysqli_fetch_column($result);
 
 
 $path_avatar = $old_avatar;
-if (is_uploaded_file($avatar['tmp_name'])) {
+if (isset($old_avatar)) {
     remove_file($old_avatar);
-    $path_avatar = upload_file($avatar, "users/");
 }
-echo $path_avatar;
 
-$birth_year = empty($birth_year) ? 'NULL' : (int)$birth_year;
+$path_avatar = upload_file($avatar, "users/");
+
+
+
+$birth_year = empty($birth_year) ? NULL : (int)$birth_year;
+
+
 // update user
 
 $query = "update users set

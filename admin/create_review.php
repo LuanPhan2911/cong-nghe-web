@@ -34,7 +34,7 @@ if (!check_admin()) {
                                 <h3 class="text-center">Create Review Form</h3>
                             </div>
                             <div class="card-body">
-                                <form action="store_review.php" method="post" enctype="multipart/form-data" id="create_review">
+                                <form action="reviews/store_review.php" method="post" enctype="multipart/form-data" id="create_review">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="mb-3">
