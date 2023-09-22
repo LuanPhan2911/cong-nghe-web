@@ -1,7 +1,12 @@
 <?php
 
 require_once __DIR__ . "/../middleware/session.php";
-$brand = "Home";
+$breadcrumb = [
+    [
+        "url" => "./index.php",
+        "name" => "Home"
+    ]
+];
 
 if (!check_admin()) {
     header("location:../index.php");
@@ -80,7 +85,7 @@ mysqli_close($connect);
                                             <a href='reviews/hidden_review.php?id=<?= $each["id"] ?>&action=<?= "show" ?>' class="btn btn-warning">Show</a>
                                         <?php endif;  ?>
 
-                                        <a href='reviews/delete_review.php?id=<?= $each["id"] ?>' class="btn btn-danger">Delete</a>
+                                        <a href='reviews/delete_review.php?id=<?= $each["id"] ?>' class="btn btn-danger delete-review">Delete</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -96,8 +101,29 @@ mysqli_close($connect);
 
     <?php require_once __DIR__ . "/../layouts/toast_success.php" ?>
     <?php require_once __DIR__ . "/../layouts/toast_error.php" ?>
-
     <?php require_once __DIR__ . "/layouts/script.php" ?>
+    <script>
+        $(".delete-review").confirm({
+            title: 'Delete Review?',
+            content: 'This dialog will automatically trigger \'cancel\' in 5 seconds if you don\'t respond.',
+            autoClose: 'cancel|5000',
+            buttons: {
+                delete: {
+                    text: 'Delete',
+                    btnClass: "btn-danger",
+                    action: function() {
+                        location.href = this.$target.attr('href');
+                    }
+                },
+                cancel: {
+                    btnClass: "btn-success",
+                    action: function() {
+
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -1,7 +1,16 @@
 <?php
 
 require_once __DIR__ . "/../middleware/session.php";
-$brand = "Review Form";
+$breadcrumb = [
+    [
+        "url" => "./index.php",
+        "name" => "Home"
+    ],
+    [
+        "url" => "",
+        "name" => "Create Review"
+    ],
+];
 if (!check_admin()) {
     header("location:../index.php");
     exit;
@@ -15,7 +24,7 @@ if (!check_admin()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . "/layouts/styles.php" ?>
-    <title>Admin - <?php echo "$brand"  ?></title>
+    <title>Admin - Create Review</title>
 
 </head>
 

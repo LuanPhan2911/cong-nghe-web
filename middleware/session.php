@@ -1,6 +1,6 @@
 <?php
 session_start();
-function session_flash($key)
+function flash($key)
 {
     if (isset($_SESSION[$key])) {
         $message = $_SESSION[$key];
@@ -10,13 +10,13 @@ function session_flash($key)
 }
 function old_value($key)
 {
-    return session_flash($key);
+    return flash($key);
 }
-function check_login()
+function check_login(): bool
 {
-    return isset($_SESSION["id"]) && isset($_SESSION["role"]);
+    return isset($_SESSION["user_id"]) && isset($_SESSION["user_role"]);
 }
 function check_admin()
 {
-    return isset($_SESSION["id"]) &&  isset($_SESSION["role"]) && $_SESSION['role'] === true;
+    return check_login() && $_SESSION['user_role'] == 1;
 }

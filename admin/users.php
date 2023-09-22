@@ -3,7 +3,16 @@ require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
 require_once __DIR__ . "/../database/connect.php";
 
-$brand = "Users";
+$breadcrumb = [
+    [
+        "url" => "./index.php",
+        "name" => "Home"
+    ],
+    [
+        "url" => "",
+        "name" => "Users"
+    ],
+];
 if (!check_admin()) {
     header("location:../index.php");
     exit;

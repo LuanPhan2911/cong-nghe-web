@@ -5,7 +5,12 @@
 .feature-review #carousel img {
   width: 100%;
   height: 400px;
-  object-fit: cover;
+}
+.feature-review #carousel h2 {
+  font-size: 36px;
+  background: -webkit-linear-gradient(#8539dc, #080108);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .reviews .review-content {
   height: 200px;
@@ -25,15 +30,7 @@
 .review-content .review-name a:hover {
   color: #f00;
 }
-.new-review ul a,
-.tags ul a {
-  color: #333;
-  text-decoration: none;
-  font-size: 1em;
-}
-.new-review ul a:hover {
-  color: #f00;
-}
+
 .tags ul a:hover {
   color: #0d6efd;
 }

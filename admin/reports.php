@@ -1,6 +1,15 @@
 <?php
 require_once __DIR__ . "/../middleware/session.php";
-$brand = "Reports";
+$breadcrumb = [
+    [
+        "url" => "./index.php",
+        "name" => "Home"
+    ],
+    [
+        "url" => "",
+        "name" => "Reports"
+    ],
+];
 if (!check_admin()) {
     header("location:../index.php");
     exit;

@@ -25,13 +25,13 @@
                             if (check_login()) {
                             ?>
                                 <li class="nav-item">
-                                    <div class="d-flex justify-content-around align-items-center">
-                                        <img src="assets/images/truong-dich-review.jpeg" alt="" width="50px" height="50px" class="img-thumbnail">
-                                        <span><?php echo $_SESSION["name"] ?></span>
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        <img src="assets/images/<?= $_SESSION['user_avatar'] ?>" alt="" width="70px" height="70px" class="img-thumbnail">
+                                        <div><?= $_SESSION['user_name'] ?></div>
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="user.php?id=<?php echo $_SESSION["id"] ?>" class="nav-link">Hồ sơ</a>
+                                    <a href="user.php?id=<?= $_SESSION["user_id"] ?>" class="nav-link">Hồ sơ</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="logout.php" class="nav-link">Thoát</a>
@@ -39,7 +39,7 @@
                             <?php
                             } else {
                             ?>
-                                <li class="nav-item">
+                                <li class="nav-item ">
                                     <a class="nav-link px-2" href="login.php">Đăng nhập</a>
                                 </li>
                                 <li class="nav-item">

@@ -70,7 +70,7 @@
     </main>
     <?php require_once __DIR__ . "/layouts/footer.php" ?>
     <?php require_once __DIR__ . "/layouts/script.php" ?>
-    <script src="assets/js/jquery.validate.min.js"></script>
+
     <script>
         $(function() {
 

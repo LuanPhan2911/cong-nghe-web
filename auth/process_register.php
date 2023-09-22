@@ -38,10 +38,10 @@ $result = mysqli_query($connect, $query);
 
 if (isset($result)) {
 
-    $_SESSION["name"] = $name;
-    $_SESSION["role"] = 0;
-    $_SESSION['id'] = mysqli_insert_id($connect);
-
+    $_SESSION["user_name"] = $name;
+    $_SESSION["user_role"] = 0;
+    $_SESSION['user_id'] = mysqli_insert_id($connect);
+    $_SESSION['user_avatar'] = 'users/default.webp';
     $_SESSION["msg"] = "Bạn đã đăng ký thành công!";
     header("location:../index.php");
 }

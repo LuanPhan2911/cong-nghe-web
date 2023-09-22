@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . "/middleware/session.php";
-if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
-    header("location:/");
+if (check_login()) {
+    header("location:./index.php");
 }
+$_SESSION['redirect_back'] = $_SERVER['HTTP_REFERER'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +65,6 @@ if (isset($_SESSION["id"]) && isset($_SESSION["role"])) {
     </main>
     <?php require_once __DIR__ . "/layouts/footer.php" ?>
     <?php require_once __DIR__ . "/layouts/script.php" ?>
-    <script src="assets/js/jquery.validate.min.js"></script>
     <script>
         $(function() {
 

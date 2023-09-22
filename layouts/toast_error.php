@@ -5,7 +5,7 @@ if (isset($_SESSION["err"])) {
         <div class="toast show bg-danger">
             <div class="d-flex">
                 <div class="toast-body text-white">
-                    <?php echo session_flash("err") ?>
+                    <?php echo flash("err") ?>
                 </div>
                 <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>

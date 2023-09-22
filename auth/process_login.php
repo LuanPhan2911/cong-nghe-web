@@ -28,20 +28,22 @@ if (isset($data)) {
     }
 
 
-    $role = boolval($data["role"]);
-    $_SESSION["role"] = $role;
-    $_SESSION["name"] = $data["name"];
-    $_SESSION["id"] = $data["id"];
+
+    $_SESSION["user_role"] = $data['role'];
+    $_SESSION["user_name"] = $data["name"];
+    $_SESSION["user_id"] = $data["id"];
+    $_SESSION['user_avatar'] = $data['avatar'] ?? "users/default.webp";
 
     // 1 is admin
-    if ($role === true) {
+    if ($data['role'] == 1) {
 
         $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
         header("location:../admin/index.php");
         exit;
     } else {
         $_SESSION["msg"] = "Bạn đã đăng nhập thành công!";
-        header("location:../index.php");
+        $redirect_back = flash('redirect_back');
+        header("location:" . $redirect_back);
         exit;
     }
 } else {
