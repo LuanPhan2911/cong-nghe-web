@@ -1,3 +1,17 @@
+<?php
+require_once __DIR__ . "/database/connect.php";
+$q = $_GET['q'] ?? NULL;
+$redirect_back = "location: " . $_SERVER['HTTP_REFERER'];
+if (empty($q)) {
+    header($redirect_back);
+    exit;
+}
+$query = "select * from stories where 
+name like '%$q%' or author_name like '%$q%' or genres like'%$q%'";
+
+$reviews = mysqli_query($connect, $query);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . "/layouts/styles.php" ?>
-    <title>Search</title>
+    <title>Tìm kiếm</title>
 </head>
 
 <body>
@@ -13,109 +27,22 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 bg-white">
-                    <h3>SEARCH RESULTS FOR "D"</h3>
-                    <div class="review-content p-2 my-2">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="./images/review-truyen-trong-sinh-cung-truc-ma-vuong-gia-250x250.jpg" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="review-name">
-                                    <a href="./review.php"> Review truyen vuong gia trong sinh</a>
-                                </div>
-                                <div class="author-name">
-                                    <i class="bi bi-pen"></i>
-                                    <span> Nguyen Van Trung</span>
-                                </div>
-                                <div class="created_at">
-                                    <i class="bi bi-clock"></i>
-                                    <span> 30 thang 3 2023</span>
-                                </div>
-                                <div class="view">
-                                    <i class="bi bi-eye"></i>
-                                    <span>220</span>
-                                </div>
-                                <div class="tag d-flex justify-content-end">
-                                    <a href="" class="btn btn-outline-primary">
-                                        Ngon tinh
-                                    </a>
-                                </div>
+                <div class="col-lg-8">
+                    <div class=" bg-white shadow p-3">
+                        <h3 class="text-primary">Tìm kiếm kết quả cho "<span class="text-black"><?= $q ?></span>"</h3>
+                        <?php if (mysqli_num_rows($reviews) > 0) : ?>
+                            <?php require_once __DIR__ . "/pages/reviews.php" ?>
+                        <?php else : ?>
+                            <h4 class="text-secondary">Không tìm thấy kết quả phù hợp</h4>
+                        <?php endif;  ?>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-content p-2">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="./images/review-truyen-trong-sinh-cung-truc-ma-vuong-gia-250x250.jpg" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="review-name">
-                                    <a href="./review.php"> Review truyen vuong gia trong sinh</a>
-                                </div>
-                                <div class="author-name">
-                                    <i class="bi bi-pen"></i>
-                                    <span> Nguyen Van Trung</span>
-                                </div>
-                                <div class="created_at">
-                                    <i class="bi bi-clock"></i>
-                                    <span> 30 thang 3 2023</span>
-                                </div>
-                                <div class="view">
-                                    <i class="bi bi-eye"></i>
-                                    <span>220</span>
-                                </div>
-                                <div class="tag d-flex justify-content-end">
-                                    <a href="" class="btn btn-outline-primary">
-                                        Ngon tinh
-                                    </a>
-                                </div>
 
-                            </div>
-                        </div>
                     </div>
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
+
                 </div>
                 <div class="col-lg-4">
-                    <div class="new-review p-2 bg-white">
-                        <h3>Mới đăng</h3>
-                        <ul class="list-unstyled p-2">
-                            <li>
-                                <a href="">Review truyen vuong gia trong sinh</a>
-                            </li>
-                            <li>
-                                <a href="">Review truyen vuong gia trong sinh</a>
-                            </li>
-                            <li>
-                                <a href="">Review truyen vuong gia trong sinh</a>
-                            </li>
+                    <?php require_once __DIR__ . "/pages/new_review.php" ?>
 
-                        </ul>
-                    </div>
-                    <div class="tags p-2 bg-white my-2">
-                        <h3>Thể loại</h3>
-                        <ul class="list-unstyled p-2">
-                            <li>
-                                <a href="">Ngon tinh</a>
-                            </li>
-                            <li>
-                                <a href="">Ngon tinh</a>
-                            </li>
-                            <li>
-                                <a href="">Ngon tinh</a>
-                            </li>
-                            <li>
-                                <a href="">Ngon tinh</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>

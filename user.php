@@ -46,9 +46,9 @@ mysqli_close($connect);
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-9">
-                    <div class="card">
-                        <div class="card-header bg-primary-subtle">
-                            <h3 class="text-center">Hồ sơ</h3>
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h3 class="text-center text-primary">Hồ sơ</h3>
                         </div>
                         <div class="card-body">
                             <form action="/auth/update_user.php" method="post" enctype="multipart/form-data" id="update_user">

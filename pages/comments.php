@@ -2,33 +2,42 @@
     <div class="comments-body"></div>
     <div class="btn btn-primary" id="load_more">Đọc tiếp</div>
 </div>
-<div class="modal fade" tabindex="-1" id="report-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Báo cáo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="mb-3">
-                        <label for="">Nội dung báo cáo</label>
-                        <input type="text" name="content" id="report-content" class="form-control">
-                    </div>
-                    <div class="mb-3 d-flex justify-content-center">
-                        <button class="btn btn-primary px-5 d-block" type="submit">Gửi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<?php require_once
+
+    __DIR__ . '/report_form.php' ?>
 <script>
     $(function() {
 
         let page = 1;
         let commentsHtml = [];
+        let reported_type = "",
+            reported_id = "";
         const urlParams = new URLSearchParams(window.location.search);
+
+        function renderComments(data) {
+            return data.map(item => {
+                return `<div class="card mb-3 pt-3 shadow " style="min-height: 170px;">
+                                             <div class="row g-0">
+                                                  <div class="col-3 d-flex flex-column align-items-center my-3">
+                                                      <img src="./assets/images/${item['user_avatar']||'users/default.webp'}" class="img-fluid" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                      <div class="text-primary text-center mt-2 text-capitalize" style="font-size: 14px;">${item['user_name']}</div>
+                                                 </div>
+                                            <div class="col-9">
+                                                <div class="card-body">
+                                                    <div class="badge bg-secondary position-absolute top-0 end-0 m-1">${moment(item['created_at']).fromNow()} </div>
+                                                        <a href="review.php?id=${item['story_id']}" class="text-decoration-none">${item['story_name']}</a>
+                                                        <div class="line-clamp-3 text_comment" style="font-size: 14px;"> ${item['content']}</div>
+                                                        <button class="read_more border-0 text-primary bg-transparent d-none">Đọc tiếp</button>
+                                                        <button class="report-comment btn bg-transparent position-absolute bottom-0 end-0" data-type="comments" data-id="${item['id']}">
+                                                             <i class="bi bi-flag"></i>
+                                                        </button>
+                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+            })
+        }
         fetchComments();
 
         function fetchComments() {
@@ -55,32 +64,7 @@
                             $('#load_more').addClass('d-none');
                         }
                         if (data?.length > 0) {
-                            dataMap =
-                                data.map(item => {
-                                    return `<div class="card mb-3 pt-3" style="min-height: 170px;">
-                                             <div class="row g-0">
-                                                  <div class="col-3 d-flex flex-column align-items-center my-3">
-                                                      <img src="./assets/images/${item['user_avatar']||'users/default.webp'}" class="img-fluid" style="width: 50px; height: 50px; border-radius: 50%;">
-                                                      <div class="text-primary text-center" style="font-size: 14px;">${item['user_name']}</div>
-                                                 </div>
-                                            <div class="col-9">
-                                                <div class="card-body">
-                                                    <div class="badge bg-secondary position-absolute top-0 end-0 m-1">${moment(item['created_at']).fromNow()} </div>
-                                                        <a href="review.php?id=${item['story_id']}" class="text-decoration-none" style="font-size: 14px;">${item['story_name']}</a>
-                                                        <div class="line-clamp-3 text_comment"> ${item['content']}</div>
-                                                        <button class="read_more border-0 text-primary bg-transparent d-none">Đọc tiếp</button>
-                                                        <button class="report-comment btn btn-warning position-absolute bottom-0 end-0"
-                                                         data-type="comments" data-id=${item['id']}
-                                                         data-bs-toggle="modal" data-bs-target="#report-modal"
-                                                         >
-                                                             <i class="bi bi-flag"></i>
-                                                        </button>
-                
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>`;
-                                })
+                            let dataMap = renderComments(data);
                             commentsHtml = [...commentsHtml, ...dataMap];
                             $('.comments-body').html(commentsHtml);
 
@@ -97,12 +81,21 @@
                                     })
                                 }
                             })
-
                             $('.report-comment').click(function() {
-                                let reported_type = $(this).data('type');
-                                let reported_id = $(this).data('id');
+
+                                reported_type = $(this).data('type');
+                                reported_id = $(this).data('id');
+
+                                $('#reported_type').val(reported_type);
+                                $('#reported_id').val(reported_id);
+
+                                $('#report-modal').modal('show');
+                                $('#report-content').val('');
+
 
                             })
+
+
                         } else {
                             $('#load_more').addClass('d-none');
                             $(".comments-body").html(
@@ -125,6 +118,5 @@
                 fetchComments();
             }
         })
-
     })
 </script>

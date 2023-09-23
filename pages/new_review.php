@@ -5,8 +5,8 @@ $newest_review = mysqli_query($connect, $query);
 
 ?>
 
-<div class="new-review p-2 bg-white">
-    <h3>Mới đăng</h3>
+<div class="new-review p-2 bg-white shadow">
+    <h3 class="text-primary">Mới đăng</h3>
     <ul class="list-unstyled p-2">
         <?php foreach ($newest_review as $each) { ?>
             <li>

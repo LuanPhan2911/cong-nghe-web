@@ -22,10 +22,10 @@ $_SESSION['redirect_back'] = $_SERVER['HTTP_REFERER'];
     <main>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-5">
-                    <div class="card">
-                        <div class="card-header bg-primary-subtle">
-                            <h3 class="text-center">Login</h3>
+                <div class="col-lg-5 my-3">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h3 class="text-center text-primary">Đăng nhập</h3>
                         </div>
                         <div class="card-body">
                             <form action="/auth/process_login.php" method="post" id="login_form">
@@ -36,14 +36,14 @@ $_SESSION['redirect_back'] = $_SERVER['HTTP_REFERER'];
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="password" class="col-sm-3 col-form-label">Password</label>
+                                    <label for="password" class="col-sm-3 col-form-label">Mật khẩu</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" name="password" type="password" id="password" />
                                     </div>
 
                                 </div>
                                 <div class="mb-3 d-flex justify-content-center">
-                                    <button class="btn btn-primary px-5 d-block" type="submit">Login</button>
+                                    <button class="btn btn-primary px-5 d-block" type="submit">Đăng nhập</button>
                                 </div>
                                 <div class="mb-3">
                                     <p class="text-center">Bạn chưa có tài khoản?

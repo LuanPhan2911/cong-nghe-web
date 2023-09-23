@@ -3,6 +3,7 @@
 <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="assets/js/jquery-confirm.min.js"></script>
 <script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/notify.min.js"></script>
 <script>
     moment.locale('vi');
     $(function() {
@@ -10,5 +11,8 @@
             let time = $(this).text();
             $(this).text(moment(time).fromNow())
         })
+    })
+    $.notify.defaults({
+        globalPosition: 'bottom right',
     })
 </script>

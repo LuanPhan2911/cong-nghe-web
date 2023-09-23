@@ -1,3 +1,3 @@
-<footer class="d-flex flex-column justify-content-center align-items-center">
-    &copy; Review Truyện - Luan Phan @ YokKok
+<footer class="d-flex flex-column justify-content-center align-items-center text-primary">
+    &copy;RT-LP@YK
 </footer>

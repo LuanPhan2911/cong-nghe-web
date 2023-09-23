@@ -27,7 +27,39 @@ require_once __DIR__ . "/../middleware/session.php";
         </div>
     </div>
 <?php else : ?>
-    <div class="text-warning">Cần đăng nhập để bình luận
-        <a href="./login.php" class="link-primary text-decoration-none"> Đăng nhâp</a>
+    <div class="text-warning mb-2">Cần đăng nhập để bình luận
+        <a href="./login.php" class="link-primary text-decoration-none"> Đăng nhập</a>
     </div>
 <?php endif;  ?>
+<script>
+    $(function() {
+        $("#comment-form").validate({
+            rules: {
+
+                comment_content: {
+                    required: true
+                }
+
+            },
+            messages: {
+
+                comment_content: {
+                    required: "Nội dung bình luận không được để trống!"
+                }
+
+            },
+            errorElement: "div",
+            errorPlacement: function(error, element) {
+                error.addClass("invalid-feedback");
+                error.insertAfter(element);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            }
+        })
+
+    })
+</script>

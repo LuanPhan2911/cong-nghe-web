@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . "/layouts/styles.php" ?>
+
     <title>Đăng ký</title>
 </head>
 
@@ -14,10 +15,10 @@
     <main>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-5">
-                    <div class="card">
-                        <div class="card-header bg-primary-subtle">
-                            <h3 class="text-center">Đăng ký</h3>
+                <div class="col-lg-5 my-3">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h3 class="text-center text-primary">Đăng ký</h3>
                         </div>
                         <div class="card-body">
                             <form action="/auth/process_register.php" method="post" id="register_form">
