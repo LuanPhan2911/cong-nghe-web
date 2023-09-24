@@ -2,6 +2,10 @@
 
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../database/connect.php";
+if (!check_admin()) {
+    header("location:../index.php");
+    exit;
+}
 $breadcrumb = [
     [
         "url" => "./index.php",
@@ -9,13 +13,49 @@ $breadcrumb = [
     ]
 ];
 
-if (!check_admin()) {
-    header("location:../index.php");
-    exit;
-}
 
-$query = "select * from stories";
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$limit = 10;
+$offset = ($page - 1) * $limit;
+
+$query = "select * from stories limit $limit offset $offset";
 $stories = mysqli_query($connect, $query);
+
+$query = "select count(*) from stories";
+$count_record = mysqli_query($connect, $query);
+
+$total_record = mysqli_fetch_column($count_record);
+$total_page = ceil(intval($total_record) / intval($limit));
+
+
+$prev = $page - 1;
+$next = $page + 1;
+
+
+
+$query = "select 
+sum(view_count) as total_view_count, count(*) as total_review 
+from stories";
+
+$result = mysqli_query($connect, $query);
+$review_statistic = mysqli_fetch_array($result);
+
+$query = "select 
+count(*) as total_user 
+from users";
+
+$result = mysqli_query($connect, $query);
+$user_statistic = mysqli_fetch_array($result);
+
+$query = "select 
+count(*) as total_comment
+from comments";
+
+$result = mysqli_query($connect, $query);
+$comment_statistic = mysqli_fetch_array($result);
+
+
+
 
 function is_pinned($pinned)
 {
@@ -50,9 +90,45 @@ mysqli_close($connect);
                     <?php require_once __DIR__ . "/layouts/navbar.php" ?>
                 </header>
                 <main>
-                    <a href="create_review.php" class="btn btn-success">Create Review</a>
-                    <table class="table table-hover">
-                        <thead>
+                    <div class="row mb-3">
+                        <div class="col-8">
+                            <div class="chart p-3 shadow">
+                                <h3 class="text-primary">View count chart</h3>
+                                <canvas id="view_count_line_chart" class="w-100"></canvas>
+                            </div>
+
+                        </div>
+                        <div class="col-4">
+                            <div class="statistic p-3 shadow">
+                                <h3 class="text-primary">Statistic</h3>
+                                <div class="total_view_count">
+                                    <span class="text-primary">Sum of view count: </span>
+                                    <?= $review_statistic['total_view_count'] ?>
+                                </div>
+                                <div class="total_review">
+                                    <span class="text-primary">Count of review: </span>
+                                    <?= $review_statistic['total_review'] ?>
+                                </div>
+                                <div class="total_user">
+                                    <span class="text-success">Count of user: </span>
+                                    <?= $user_statistic['total_user'] ?>
+                                </div>
+                                <div class="total_comment">
+                                    <span class="text-success">Count of comment: </span>
+                                    <?= $comment_statistic['total_comment'] ?>
+                                </div>
+                                <a href="create_review.php" class="btn btn-success">Create Review</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <table class="table table-hover shadow caption-top">
+                        <caption>
+                            <h3 class="text-primary">All Reviews</h3>
+                        </caption>
+                        <thead class="table-primary">
                             <tr>
                                 <th>#</th>
                                 <th>Avatar</th>
@@ -69,7 +145,7 @@ mysqli_close($connect);
                                     <td>
                                         <img src='<?= "../assets/images/" . $each['avatar'] ?>' alt="" class="avatar">
                                     </td>
-                                    <td><?php echo $each['name'] ?></td>
+                                    <td class="col-3"><?php echo $each['name'] ?></td>
                                     <td><?php echo $each['author_name'] ?></td>
 
                                     <td>
@@ -93,6 +169,7 @@ mysqli_close($connect);
                         </tbody>
                         </thead>
                     </table>
+                    <?php require_once __DIR__ . '/../pages/paginate.php' ?>
                 </main>
             </div>
         </div>
@@ -104,26 +181,77 @@ mysqli_close($connect);
     <?php require_once __DIR__ . "/../layouts/toast_error.php" ?>
     <?php require_once __DIR__ . "/layouts/script.php" ?>
     <script>
-        $(".delete-review").confirm({
-            title: 'Delete Review?',
-            content: 'This dialog will automatically trigger \'cancel\' in 5 seconds if you don\'t respond.',
-            autoClose: 'cancel|5000',
-            buttons: {
-                delete: {
-                    text: 'Delete',
-                    btnClass: "btn-danger",
-                    action: function() {
-                        location.href = this.$target.attr('href');
-                    }
-                },
-                cancel: {
-                    btnClass: "btn-success",
-                    action: function() {
+        $(function() {
+            $(".delete-review").confirm({
+                title: 'Delete Review?',
+                content: 'This dialog will automatically trigger \'cancel\' in 5 seconds if you don\'t respond.',
+                autoClose: 'cancel|5000',
+                buttons: {
+                    delete: {
+                        text: 'Delete',
+                        btnClass: "btn-danger",
+                        action: function() {
+                            location.href = this.$target.attr('href');
+                        }
+                    },
+                    cancel: {
+                        btnClass: "btn-success",
+                        action: function() {
 
+                        }
                     }
                 }
+            });
+
+
+            function renderViewCountLineChart() {
+
+                $.ajax({
+                    type: "get",
+                    url: "reviews/count_review.php",
+                    success: function(response) {
+                        if (response?.success) {
+                            let {
+                                data
+                            } = response;
+
+                            if (data?.length > 0) {
+                                new Chart(
+                                    $('#view_count_line_chart'), {
+                                        type: 'bar',
+                                        data: {
+                                            labels: data.map(item => item.name),
+                                            datasets: [{
+                                                label: 'Top 10 view count review',
+                                                data: data.map(item => item.view_count)
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                x: {
+                                                    ticks: {
+                                                        callback: function(value) {
+                                                            let newLabel = this.getLabelForValue(value)
+                                                                .substring(0, 8) + '...';
+                                                            return newLabel;
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    }
+                });
+
+
             }
-        });
+
+            renderViewCountLineChart();
+
+        })
     </script>
 </body>
 

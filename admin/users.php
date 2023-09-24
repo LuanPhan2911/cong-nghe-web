@@ -2,7 +2,10 @@
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
 require_once __DIR__ . "/../database/connect.php";
-
+if (!check_admin()) {
+    header("location:../index.php");
+    exit;
+}
 $breadcrumb = [
     [
         "url" => "./index.php",
@@ -13,10 +16,7 @@ $breadcrumb = [
         "name" => "Users"
     ],
 ];
-if (!check_admin()) {
-    header("location:../index.php");
-    exit;
-}
+
 
 
 
@@ -41,42 +41,9 @@ $prev = $page - 1;
 $next = $page + 1;
 
 mysqli_close($connect);
-function generate_src_avatar($avatar)
-{
-    if (isset($avatar)) {
-        return '../assets/images/' . $avatar;
-    } else {
-        return '../assets/images/users/default.webp';
-    }
-}
-function generate_gender($gender)
-{
-    return $gender == 1 ? "Male" : "Female";
-}
-function generate_birth_year($gender)
-{
-    return isset($gender) ? $gender : "Not fill";
-}
-function generate_link_prev($page, $prev)
-{
-    if ($page <= 1) {
-        return "#";
-    } else {
-        return "?page=" . $prev;
-    }
-}
-function generate_link_next($page, $next, $total_page)
-{
-    if ($page >= $total_page) {
-        return "#";
-    } else {
-        return "?page=" . $next;
-    }
-}
-function user_blocked($user)
-{
-    return isset($user['deleted_at']);
-}
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -104,7 +71,12 @@ function user_blocked($user)
                     <?php require_once __DIR__ . "/layouts/navbar.php" ?>
                 </header>
                 <main>
-                    <table class="table table-hover">
+                    <table class="table table-hover caption-top shadow">
+                        <caption>
+                            <h3 class="text-primary">
+                                All Users
+                            </h3>
+                        </caption>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -120,18 +92,18 @@ function user_blocked($user)
                             </tr>
                         <tbody>
                             <?php foreach ($users as $each) { ?>
-                                <tr class="<?php if (user_blocked($each))  echo 'table-warning' ?>">
+                                <tr class="<?= isset($each['deleted_at']) ? 'table-warning' : '' ?>">
                                     <td><?= $each['id'] ?></td>
                                     <td>
-                                        <img src="<?= generate_src_avatar($each['avatar']) ?>" alt="" class="img-thumbnail avatar rounded-circle">
+                                        <img src="../assets/images/<?= $each['avatar'] ?? 'users/default.webp' ?>" alt="" class="img-thumbnail avatar rounded-circle">
                                     </td>
                                     <td><?= $each['name'] ?></td>
                                     <td><?= $each['email'] ?></td>
-                                    <td><?= generate_birth_year($each['birth_year']) ?></td>
-                                    <td><?= generate_gender($each['gender']) ?></td>
+                                    <td><?= isset($each['birth_year']) ? $each['birth_year'] : 'Not fill' ?></td>
+                                    <td><?= $each['gender'] == '1' ? 'Male' : 'Female' ?></td>
                                     <td><?= $each['created_at'] ?></td>
                                     <td>
-                                        <?php if (user_blocked($each)) { ?>
+                                        <?php if (!empty($each['deleted_at'])) { ?>
                                             <a href="users/block_user.php?id=<?= $each['id'] ?>&action=unblock" class="btn btn-success">Unblock</a>
                                         <?php } else {  ?>
                                             <a href="users/block_user.php?id=<?= $each['id'] ?>&action=block" class="btn btn-warning">Block</a>
@@ -143,25 +115,7 @@ function user_blocked($user)
                         </tbody>
                         </thead>
                     </table>
-                    <nav>
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item <?php if ($page <= 1) echo 'disabled' ?>">
-                                <a class="page-link" href="<?= generate_link_prev($page, $prev) ?>" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <?php for ($i = 1; $i <= $total_page; $i++) : ?>
-                                <li class="page-item <?php if ($page == $i)  echo 'active'; ?>">
-                                    <a class="page-link" href='<?= "?page=$i" ?>'> <?= $i ?> </a>
-                                </li>
-                            <?php endfor; ?>
-                            <li class="page-item <?php if ($page >= $total_page) echo 'disabled' ?>">
-                                <a class="page-link" href="<?= generate_link_next($page, $next, $total_page) ?>" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <?php require_once __DIR__ . "/../pages/paginate.php" ?>
                 </main>
             </div>
         </div>

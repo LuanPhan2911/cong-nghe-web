@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../middleware/session.php";
+if (!check_admin()) {
+    header("location:../../index.php");
+    exit;
+}
 $type = $_GET['type'] ?? NULL;
 $redirect_back = "location: " . $_SERVER['HTTP_REFERER'];
 if (empty($type)) {

@@ -2,6 +2,10 @@
 
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../database/connect.php";
+if (!check_admin()) {
+    header("location:../index.php");
+    exit;
+}
 $breadcrumb = [
     [
         "url" => "./index.php",
@@ -12,10 +16,7 @@ $breadcrumb = [
         "name" => "Update Review"
     ],
 ];
-if (!check_admin()) {
-    header("location:../index.php");
-    exit;
-}
+
 $_SESSION['redirect_back'] = $_SERVER['HTTP_REFERER'];
 $id = $_GET['id'];
 if (empty($id)) {
@@ -59,7 +60,7 @@ mysqli_close($connect);
                 </header>
                 <main>
                     <div class="container">
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-header bg-primary-subtle">
                                 <h3 class="text-center">Update Review Form</h3>
                             </div>

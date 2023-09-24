@@ -2,6 +2,10 @@
 require_once __DIR__ . "/../../middleware/session.php";
 require __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../helper/helper.php";
+if (!check_admin()) {
+    header("location:../../index.php");
+    exit;
+}
 $id = $_POST['id'] ?? NULL;
 $name = $_POST['name'] ?? NULL;
 $author_name = $_POST['author_name'] ?? NULL;

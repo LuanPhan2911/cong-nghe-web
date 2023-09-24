@@ -2,11 +2,15 @@
 require_once __DIR__ . "/../../middleware/session.php";
 require __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../helper/helper.php";
-$name = $_POST['name'];
-$author_name = $_POST['author_name'];
-$description = $_POST['description'];
-$review_content = $_POST['review_content'];
-$genres = $_POST['genres'];
+if (!check_admin()) {
+    header("location:../../index.php");
+    exit;
+}
+$name = $_POST['name'] ?? NULL;
+$author_name = $_POST['author_name'] ?? NULL;
+$description = $_POST['description'] ?? NULL;
+$review_content = $_POST['review_content'] ?? NULL;
+$genres = $_POST['genres'] ?? NULL;
 
 $avatar = $_FILES['avatar'];
 

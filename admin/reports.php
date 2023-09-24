@@ -73,7 +73,7 @@ if ($reported_type === 'comments') {
                     <?php if ($reported_type === 'comments') : ?>
 
                         <?php if (mysqli_num_rows($comments) > 0) : ?>
-                            <table class="table table-hover table-bordered caption-top">
+                            <table class="table table-hover table-bordered caption-top shadow">
                                 <caption>
                                     <h3 class="text-success">List of report comments</h3>
                                 </caption>
@@ -120,7 +120,7 @@ if ($reported_type === 'comments') {
 
                     <?php else : ?>
                         <?php if (mysqli_num_rows($stories) > 0) : ?>
-                            <table class="table table-hover table-bordered caption-top">
+                            <table class="table table-hover table-bordered caption-top shadow">
                                 <caption>
                                     <h3 class="text-success">List of report comments</h3>
                                 </caption>

@@ -2,12 +2,13 @@
 require_once __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../middleware/session.php";
 require_once __DIR__ . "/../../helper/helper.php";
-$id = $_GET['id'];
-
 if (!check_admin()) {
     header("location:../../index.php");
     exit;
 }
+$id = $_GET['id'] ?? NULL;
+
+
 if (empty($id)) {
     header("location:../index.php");
     exit;

@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../middleware/session.php";
+if (!check_admin()) {
+    header("location:../../index.php");
+    exit;
+}
 $id = $_GET['id'];
 $action = $_GET['action'];
 if (empty($id) || empty($action)) {

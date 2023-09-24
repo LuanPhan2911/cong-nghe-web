@@ -1,6 +1,10 @@
 <?php
 
 require_once __DIR__ . "/../middleware/session.php";
+if (!check_admin()) {
+    header("location:../index.php");
+    exit;
+}
 $breadcrumb = [
     [
         "url" => "./index.php",
@@ -11,10 +15,7 @@ $breadcrumb = [
         "name" => "Create Review"
     ],
 ];
-if (!check_admin()) {
-    header("location:../index.php");
-    exit;
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -38,7 +39,7 @@ if (!check_admin()) {
                 </header>
                 <main>
                     <div class="container">
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-header bg-primary-subtle">
                                 <h3 class="text-center">Create Review Form</h3>
                             </div>
