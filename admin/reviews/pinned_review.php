@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../middleware/session.php";
-$id = $_GET['id'];
-$action = $_GET['action'];
+$id = $_GET['id'] ?? NULL;
+$action = $_GET['action'] ?? 'pin';
 if (empty($id) || empty($action)) {
     header("location:../index.php");
     exit;

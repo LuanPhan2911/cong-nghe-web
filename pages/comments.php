@@ -2,9 +2,7 @@
     <div class="comments-body"></div>
     <div class="btn btn-primary" id="load_more">Đọc tiếp</div>
 </div>
-<?php require_once
-
-    __DIR__ . '/report_form.php' ?>
+<?php require_once __DIR__ . '/report_form.php' ?>
 <script>
     $(function() {
 
@@ -29,7 +27,7 @@
                                                         <div class="line-clamp-3 text_comment" style="font-size: 14px;"> ${item['content']}</div>
                                                         <button class="read_more border-0 text-primary bg-transparent d-none">Đọc tiếp</button>
                                                         <button class="report-comment btn bg-transparent position-absolute bottom-0 end-0" data-type="comments" data-id="${item['id']}">
-                                                             <i class="bi bi-flag"></i>
+                                                        <i class="bi bi-flag-fill text-primary"></i>
                                                         </button>
                 
                                                     </div>

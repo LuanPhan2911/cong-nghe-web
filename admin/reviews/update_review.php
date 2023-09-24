@@ -2,12 +2,12 @@
 require_once __DIR__ . "/../../middleware/session.php";
 require __DIR__ . "/../../database/connect.php";
 require_once __DIR__ . "/../../helper/helper.php";
-$id = $_POST['id'];
-$name = $_POST['name'];
-$author_name = $_POST['author_name'];
-$description = $_POST['description'];
-$review_content = $_POST['review_content'];
-$genres = $_POST['genres'];
+$id = $_POST['id'] ?? NULL;
+$name = $_POST['name'] ?? NULL;
+$author_name = $_POST['author_name'] ?? NULL;
+$description = $_POST['description'] ?? NULL;
+$review_content = $_POST['review_content'] ?? NULL;
+$genres = $_POST['genres'] ?? NULL;
 
 $avatar = $_FILES['avatar'];
 
@@ -45,5 +45,7 @@ mysqli_query($connect, $query);
 
 
 $_SESSION['msg'] = "Update Review Success!";
-header("location:../edit_review.php?id=$id");
+
+$redirect_back = flash('redirect_back');
+header("location: " . $redirect_back);
 exit;

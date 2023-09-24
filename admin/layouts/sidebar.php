@@ -23,7 +23,7 @@
 
             </li>
             <li class="nav-item">
-                <a href="../../logout.php" class="nav-link align-middle px-0" id="logout">
+                <a href="../../auth/logout.php" class="nav-link align-middle px-0" id="logout">
                     <i class="fs-4 bi-box-arrow-left"></i> <span class="ms-1 d-none d-sm-inline">Sign out</span>
                 </a>
 

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../middleware/session.php";
+require_once __DIR__ . "/../database/connect.php";
 $breadcrumb = [
     [
         "url" => "./index.php",
@@ -12,7 +13,7 @@ if (!check_admin()) {
     header("location:../index.php");
     exit;
 }
-require_once __DIR__ . "/../database/connect.php";
+
 $query = "select * from stories";
 $stories = mysqli_query($connect, $query);
 
@@ -54,7 +55,7 @@ mysqli_close($connect);
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>AVatar</th>
+                                <th>Avatar</th>
                                 <th>Name</th>
                                 <th>Author Name</th>
                                 <th>Action</th>

@@ -50,7 +50,10 @@ mysqli_query($connect, $query);
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="p-3 my-3 bg-white shadow">
+                    <div class="p-3 mb-3 bg-white shadow position-relative">
+                        <button class="report-review btn bg-transparent position-absolute top-0 end-0" data-type="stories" data-id="<?= $story['id'] ?>">
+                            <i class="bi bi-flag-fill text-primary" data-bs-toggle="tooltip" data-bs-title="Báo cáo review" data-bs-custom-class="custom-tooltip"></i>
+                        </button>
                         <h3 class="text-primary"><?= $story['name'] ?></h3>
                         <div class="p-2">
                             <img src="assets/images/<?= $story['avatar'] ?>" style="height: 400px; width: 100%;" />
@@ -75,6 +78,8 @@ mysqli_query($connect, $query);
 
                         </div>
                     </div>
+
+
                 </div>
                 <div class="col-lg-4">
                     <?php $comment_form = true ?>
@@ -89,6 +94,21 @@ mysqli_query($connect, $query);
     <?php require_once __DIR__ . "/layouts/script.php" ?>
     <?php require_once __DIR__ . "/layouts/toast_error.php" ?>
     <?php require_once __DIR__ . "/layouts/toast_success.php" ?>
+    <script>
+        $('.report-review').click(function() {
+
+            reported_type = $(this).data('type');
+            reported_id = $(this).data('id');
+
+            $('#reported_type').val(reported_type);
+            $('#reported_id').val(reported_id);
+
+            $('#report-modal').modal('show');
+            $('#report-content').val('');
+
+
+        })
+    </script>
 
 </body>
 

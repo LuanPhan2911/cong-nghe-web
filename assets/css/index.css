@@ -37,3 +37,8 @@ main {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+  --bs-tooltip-color: var(--bs-white);
+}

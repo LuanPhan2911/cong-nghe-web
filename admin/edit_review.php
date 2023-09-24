@@ -16,7 +16,7 @@ if (!check_admin()) {
     header("location:../index.php");
     exit;
 }
-
+$_SESSION['redirect_back'] = $_SERVER['HTTP_REFERER'];
 $id = $_GET['id'];
 if (empty($id)) {
     $_SESSION['err'] = "Mising Story Id to edit Review!";
@@ -45,7 +45,7 @@ mysqli_close($connect);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . "/layouts/styles.php" ?>
-    <title>Admin - <?php echo "$brand"  ?></title>
+    <title>Admin - Edit Review</title>
 
 </head>
 
