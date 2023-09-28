@@ -1,8 +1,10 @@
 <?php
-require_once __DIR__ . "/../database/connect.php";
+// require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . '/../database/pdo.php';
+require_once __DIR__ . '/../database/User.php';
 require_once __DIR__ . "/../middleware/session.php";
-$email = $_POST["email"];
-$password = $_POST["password"];
+$email = $_POST["email"] ?? NULL;
+$password = $_POST["password"] ?? NULL;
 
 $errorMessage = "Email hoặc mật khẩu không đúng";
 
@@ -12,11 +14,20 @@ if (empty($email) || empty($password)) {
     exit;
 }
 
-$query = "select * from users where email='$email'and deleted_at is null";
-$result = mysqli_query($connect, $query);
-$data = mysqli_fetch_array($result);
+//mysqli
 
-if (isset($data)) {
+// $query = "select * from users where email='$email'and deleted_at is null";
+// $result = mysqli_query($connect, $query);
+// $data = mysqli_fetch_array($result);
+
+// pdo
+$user = new User($conn);
+
+$data = $user->exist($email);
+
+$conn = null;
+
+if (!empty($data)) {
 
     // verify password
     $password_hash = $data['password'];

@@ -1,15 +1,19 @@
 <?php
-require_once __DIR__ . "/../database/connect.php";
+// require_once __DIR__ . "/../database/connect.php";
+
+require_once __DIR__ . '/../database/pdo.php';
+require_once __DIR__ . '/../database/User.php';
+
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
 
 
-$id = $_POST['id'];
-$name = $_POST['name'];
-$birth_year = $_POST['birth_year'];
-$gender = $_POST['gender'];
-$description = $_POST['description'] ?? '';
-$avatar = $_FILES['avatar'];
+$id = $_POST['id'] ?? NULL;
+$name = $_POST['name'] ?? NULL;
+$birth_year = $_POST['birth_year'] ?? NULL;
+$gender = $_POST['gender'] ?? NULL;
+$description = $_POST['description'] ?? NULL;
+$avatar = $_FILES['avatar'] ?? NULL;
 
 
 //validate
@@ -25,49 +29,77 @@ if (isset($gender) && !in_array($gender, [0, 1])) {
     header("location:../user.php?id=$id");
     exit;
 }
-if (!is_uploaded_file($avatar['tmp_name'])) {
-    $_SESSION["err"] = "Chưa cập nhật ảnh đại diện!";
-    header("location:../user.php?id=$id");
-    exit;
-}
+// if (!is_uploaded_file($avatar['tmp_name'])) {
+//     $_SESSION["err"] = "Chưa cập nhật ảnh đại diện!";
+//     header("location:../user.php?id=$id");
+//     exit;
+// }
 
 // update avatar
 
 
-$query = "select avatar from users where id='$id'";
-$result = mysqli_query($connect, $query);
-$old_avatar = mysqli_fetch_column($result);
+// $query = "select avatar from users where id='$id'";
+// $result = mysqli_query($connect, $query);
+// $old_avatar = mysqli_fetch_column($result);
+$user = new User($conn);
 
+$data = $user->findOne($id);
+$old_avatar = $data['avatar'] ?? NULL;
 
-$path_avatar = $old_avatar;
+$path_avatar = NULL;
+
 if (isset($old_avatar)) {
-    remove_file($old_avatar);
+    $path_avatar = $old_avatar;
+}
+if (isset($avatar) && is_uploaded_file($avatar['tmp_name'])) {
+
+    if (isset($old_avatar)) {
+        remove_file($old_avatar);
+    }
+
+    $path_avatar = upload_file($avatar, "users/");
 }
 
-$path_avatar = upload_file($avatar, "users/");
 
 
 
-$birth_year = empty($birth_year) ? NULL : (int)$birth_year;
+
+
+
+// $birth_year = empty($birth_year) ? NULL : (int)$birth_year;
 
 
 // update user
 
-$query = "update users set
-    name='$name',
-    avatar='$path_avatar',
-    birth_year=$birth_year,
-    description='$description',
-    gender='$gender'
-    where
-    id='$id'
-";
+// $query = "update users set
+//     name='$name',
+//     avatar='$path_avatar',
+//     birth_year=$birth_year,
+//     description='$description',
+//     gender='$gender'
+//     where
+//     id='$id'
+// ";
 
-$result = mysqli_query($connect, $query);
+// $result = mysqli_query($connect, $query);
 
 
 
-mysqli_close($connect);
-$_SESSION['msg'] = "Cập nhật thông tin tài khoản thành công!";
+// mysqli_close($connect);
+
+$result = $user->update([
+    'name' => $name,
+    'avatar' => $path_avatar,
+    'birth_year' => $birth_year,
+    'description' => $description,
+    'gender' => $gender,
+    'id' => $id
+]);
+if ($result) {
+    $_SESSION['msg'] = "Cập nhật thông tin tài khoản thành công!";
+    $_SESSION['user_name'] = $name;
+    $_SESSION['user_avatar'] = $path_avatar;
+}
+
 header("location:../user.php?id=$id");
 exit;

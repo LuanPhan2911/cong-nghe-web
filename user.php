@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . "/middleware/session.php";
-require_once __DIR__ . "/database/connect.php";
+// require_once __DIR__ . "/database/connect.php";
+
+require_once __DIR__ . '/database/pdo.php';
+require_once __DIR__ . '/database/User.php';
+
 if (!check_login()) {
     header("location:/login.php");
     exit;
@@ -10,9 +14,11 @@ if (empty($_GET["id"])) {
     exit;
 }
 $user_id = $_GET["id"];
-$query = "select * from users where id=$user_id";
-$result = mysqli_query($connect, $query);
-$user = mysqli_fetch_array($result);
+// $query = "select * from users where id=$user_id";
+// $result = mysqli_query($connect, $query);
+// $user = mysqli_fetch_array($result);
+
+$user = (new User($conn))->findOne($user_id);
 
 if (empty($user)) {
     header("location:/404.php");
@@ -20,7 +26,7 @@ if (empty($user)) {
 }
 
 
-mysqli_close($connect);
+// mysqli_close($connect);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,7 +154,6 @@ mysqli_close($connect);
                         required: true,
                     },
                     avatar: {
-                        required: true,
                         accept: "image/",
 
                     }
