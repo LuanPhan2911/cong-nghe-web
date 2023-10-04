@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . "/../middleware/session.php";
 ?>
+
+
 <?php if (check_login()) : ?>
     <div class="card mb-3">
         <div class="row g-0">

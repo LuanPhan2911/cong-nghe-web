@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../../middleware/session.php";
-require __DIR__ . "/../../database/connect.php";
+require __DIR__ . "/../../database/Story.php";
 require_once __DIR__ . "/../../helper/helper.php";
 if (!check_admin()) {
     header("location:../../index.php");
@@ -25,26 +25,25 @@ if (empty($name) || empty($author_name) || empty($description) || empty($review_
     exit;
 }
 
-$query = "select avatar from stories where id='$id'";
-$result = mysqli_query($connect, $query);
-$old_avatar = mysqli_fetch_column($result);
+$storyModel = new Story();
+
+$old_avatar = $storyModel->getAvatar($id);
 $path_avatar = $old_avatar;
 if (is_uploaded_file($avatar['tmp_name'])) {
     remove_file($old_avatar);
     $path_avatar = upload_file($avatar, "reviews/");
 }
 
-$query = "update stories set
-name='$name',
-author_name='$author_name',
-description='$description',
-review_content='$review_content',
-genres='$genres',
-avatar='$path_avatar'
-where
-id='$id'
-";
-mysqli_query($connect, $query);
+
+
+
+
+$storyModel->update(compact([
+    'name', 'author_name',
+    'description', 'review_content',
+    'genres', 'path_avatar', 'id'
+]));
+
 
 
 

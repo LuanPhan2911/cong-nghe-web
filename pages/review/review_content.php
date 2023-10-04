@@ -12,11 +12,6 @@
                 <div class="line-clamp-3 my-2" style="font-size: 14px;"><?= $each['description'] ?></div>
                 <i class="bi bi-pen text-primary"> <span><?= $each['author_name'] ?></span></i>
                 <i class="bi bi-eye position-absolute top-0 start-0 badge rounded-pill bg-primary"> <span><?= $each['view_count'] ?> lượt đọc</span></i>
-
-
-
-
-
             </div>
         </div>
     </div>

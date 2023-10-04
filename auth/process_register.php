@@ -1,6 +1,5 @@
 <?php
 // require_once __DIR__ . "/../database/connect.php";
-require_once __DIR__ . '/../database/pdo.php';
 require_once __DIR__ . '/../database/User.php';
 
 require_once __DIR__ . "/../middleware/session.php";
@@ -27,9 +26,9 @@ if (empty($name) || empty($email) || empty($password)) {
 //pdo
 
 
-$user = new User($conn);
+$userModel = new User();
 
-$data = $user->exist($email);
+$data = $userModel->exist($email);
 
 
 if (!empty($data)) {
@@ -48,7 +47,7 @@ $password_hash = password_hash($password, PASSWORD_BCRYPT);
 //     values('$name', '$email', '$password_hash')";
 // $result = mysqli_query($connect, $query);
 
-$user_id = $user->insert($name, $email, $password_hash);
+$user_id = $userModel->insert($name, $email, $password_hash);
 
 if (isset($user_id)) {
 

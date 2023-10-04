@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../middleware/session.php";
-require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../database/Story.php";
 if (!check_admin()) {
     header("location:../index.php");
     exit;
@@ -24,19 +24,15 @@ if (empty($id)) {
     header("location:./index.php");
     exit;
 }
+$storyModel = new Story();
 
-$query = "select * from stories where id='$id'";
-$result = mysqli_query($connect, $query);
-
-$story = mysqli_fetch_array($result);
+$story = $storyModel->findOne($id, withDeletedAt: true);
 if (empty($story)) {
     $_SESSION['err'] = "Story Not Found to edit!";
     header("location:./index.php");
     exit;
 }
 
-
-mysqli_close($connect);
 
 ?>
 <!DOCTYPE html>

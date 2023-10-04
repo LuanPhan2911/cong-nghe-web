@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../../middleware/session.php";
-require __DIR__ . "/../../database/connect.php";
+require __DIR__ . "/../../database/Story.php";
 require_once __DIR__ . "/../../helper/helper.php";
 if (!check_admin()) {
     header("location:../../index.php");
@@ -37,13 +37,20 @@ if (!is_uploaded_file($avatar['tmp_name'])) {
 }
 
 $path_avatar = upload_file($avatar, "reviews/");
-$query = "insert into stories(name, author_name, description, review_content, genres, avatar)
-values('$name', '$author_name', '$description', '$review_content', '$genres', '$path_avatar')";
-
-mysqli_query($connect, $query);
 
 
-mysqli_close($connect);
+
+
+$storyModel = new Story();
+
+$storyModel->insert([
+    'name' => $name,
+    'author_name' => $author_name,
+    'description' => $description,
+    'review_content' => $review_content,
+    'genres' => $genres,
+    'path_avatar' => $path_avatar
+]);
 $_SESSION['msg'] = "Create Review Success!";
 header("location:../index.php");
 exit;

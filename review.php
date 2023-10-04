@@ -1,36 +1,22 @@
 <?php
-require_once __DIR__ . "/database/connect.php";
 require_once __DIR__ . "/middleware/session.php";
+require_once __DIR__ . "/database/Story.php";
 $id = $_GET['id'];
 if (empty($id)) {
     header("location:404.php");
     exit;
 }
 
-//newest review
-$query = "select * from stories where deleted_at is NULL order by created_at desc limit 10";
-$newest_review = mysqli_query($connect, $query);
+$storyModel = new Story();
 
-$query = "select * from stories where deleted_at is NULL and id='$id'";
-$result = mysqli_query($connect, $query);
-$story = mysqli_fetch_array($result);
-
-
+$story = $storyModel->findOne($id);
 
 if (empty($story)) {
     header("location:./404.php");
     exit;
 }
-// update view count
 
-$query = "update stories set
-    view_count=view_count +1
-    where 
-    id= '$id'";
-mysqli_query($connect, $query);
-
-
-
+$storyModel->updateViewCount($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +69,7 @@ mysqli_query($connect, $query);
                 </div>
                 <div class="col-lg-4">
                     <?php $comment_form = true ?>
-                    <?php require_once __DIR__ . "/pages/new_review.php" ?>
+                    <?php require_once __DIR__ . "/pages/review/new_review.php" ?>
                     <?php require_once __DIR__ . "/pages/comment_review.php" ?>
                 </div>
             </div>

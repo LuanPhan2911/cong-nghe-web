@@ -1,7 +1,6 @@
 <?php
 // require_once __DIR__ . "/../database/connect.php";
 
-require_once __DIR__ . '/../database/pdo.php';
 require_once __DIR__ . '/../database/User.php';
 
 require_once __DIR__ . "/../middleware/session.php";
@@ -41,9 +40,9 @@ if (isset($gender) && !in_array($gender, [0, 1])) {
 // $query = "select avatar from users where id='$id'";
 // $result = mysqli_query($connect, $query);
 // $old_avatar = mysqli_fetch_column($result);
-$user = new User($conn);
+$userModel = new User();
 
-$data = $user->findOne($id);
+$data = $userModel->findOne($id);
 $old_avatar = $data['avatar'] ?? NULL;
 
 $path_avatar = NULL;
@@ -87,7 +86,7 @@ if (isset($avatar) && is_uploaded_file($avatar['tmp_name'])) {
 
 // mysqli_close($connect);
 
-$result = $user->update([
+$result = $userModel->update([
     'name' => $name,
     'avatar' => $path_avatar,
     'birth_year' => $birth_year,

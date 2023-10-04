@@ -1,24 +1,22 @@
 <?php
+require_once __DIR__ . '/Model.php';
 
 
-
-class User
+class User extends Model
 {
-    private PDO $conn;
-    public function __construct(PDO $conn)
-    {
-        $this->conn = $conn;
-    }
+
+
 
     public function exist(string $email)
     {
+
         $statement = $this->conn->prepare("select * from users where email=:email and deleted_at is null");
 
         $statement->execute([
             'email' => $email
         ]);
-
-        return  $statement->fetch() ?? NULL;
+        $user = $statement->fetch();
+        return  empty($user) ? NULL : $user;
     }
 
     public function insert(string $name, string $email, string $password)
@@ -30,7 +28,9 @@ class User
             'email' => $email,
             'password' => $password
         ]);
-        return $this->conn->lastInsertId() ?? NULL;
+
+        $user_id = $this->conn->lastInsertId();
+        return empty($user_id) ? NULL : $user_id;
     }
 
     public function findOne(string $id)

@@ -1,6 +1,6 @@
 <?php
 // require_once __DIR__ . "/../../database/connect.php";
-require_once __DIR__ . "/../../database/pdo.php";
+
 require_once __DIR__ . "/../../database/User.php";
 
 require_once __DIR__ . "/../../middleware/session.php";
@@ -23,11 +23,11 @@ if (empty($id) || empty($action)) {
 // ";
 
 // $result = mysqli_query($connect, $query);
-$user = new User($conn);
+$userModel = new User();
 if ($action == "block") {
-    $user->block($id);
+    $userModel->block($id);
 } else {
-    $user->unblock($id);
+    $userModel->unblock($id);
 }
 
 

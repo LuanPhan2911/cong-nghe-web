@@ -1,7 +1,12 @@
 <?php
 //newest review
-$query = "select * from stories where deleted_at is NULL order by created_at desc limit 10";
-$newest_review = mysqli_query($connect, $query);
+// $query = "select * from stories where deleted_at is NULL order by created_at desc limit 10";
+// $newest_review = mysqli_query($connect, $query);
+
+require_once __DIR__ . "/../../database/Story.php";
+$storyModel = new Story();
+
+$newest_review = $storyModel->getNewReview();
 
 ?>
 
@@ -16,5 +21,3 @@ $newest_review = mysqli_query($connect, $query);
         <?php } ?>
     </ul>
 </div>
-
-<?php require_once __DIR__ . "/../layouts/script.php" ?>

@@ -1,15 +1,15 @@
 <?php
-require_once __DIR__ . "/database/connect.php";
+require_once __DIR__ . "/database/Story.php";
 $q = $_GET['q'] ?? NULL;
 $redirect_back = "location: " . $_SERVER['HTTP_REFERER'];
 if (empty($q)) {
     header($redirect_back);
     exit;
 }
-$query = "select * from stories where 
-name like '%$q%' or author_name like '%$q%' or genres like'%$q%'";
+$storyModel = new Story();
 
-$reviews = mysqli_query($connect, $query);
+$reviews = $storyModel->findAll($q);
+
 
 ?>
 <!DOCTYPE html>
@@ -30,8 +30,8 @@ $reviews = mysqli_query($connect, $query);
                 <div class="col-lg-8">
                     <div class=" bg-white shadow p-3">
                         <h3 class="text-primary">Tìm kiếm kết quả cho "<span class="text-black"><?= $q ?></span>"</h3>
-                        <?php if (mysqli_num_rows($reviews) > 0) : ?>
-                            <?php require_once __DIR__ . "/pages/reviews.php" ?>
+                        <?php if (!empty($reviews)) : ?>
+                            <?php require_once __DIR__ . "/pages/review/review_content.php" ?>
                         <?php else : ?>
                             <h4 class="text-secondary">Không tìm thấy kết quả phù hợp</h4>
                         <?php endif;  ?>
@@ -41,7 +41,7 @@ $reviews = mysqli_query($connect, $query);
 
                 </div>
                 <div class="col-lg-4">
-                    <?php require_once __DIR__ . "/pages/new_review.php" ?>
+                    <?php require_once __DIR__ . "/pages/review/new_review.php" ?>
 
                 </div>
             </div>

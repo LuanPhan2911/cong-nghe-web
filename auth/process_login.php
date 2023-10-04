@@ -1,6 +1,5 @@
 <?php
 // require_once __DIR__ . "/../database/connect.php";
-require_once __DIR__ . '/../database/pdo.php';
 require_once __DIR__ . '/../database/User.php';
 require_once __DIR__ . "/../middleware/session.php";
 $email = $_POST["email"] ?? NULL;
@@ -21,11 +20,10 @@ if (empty($email) || empty($password)) {
 // $data = mysqli_fetch_array($result);
 
 // pdo
-$user = new User($conn);
+$userModel = new User();
 
-$data = $user->exist($email);
+$data = $userModel->exist($email);
 
-$conn = null;
 
 if (!empty($data)) {
 
@@ -68,4 +66,4 @@ if (!empty($data)) {
 
 
 
-$connect->close();
+// $connect->close();

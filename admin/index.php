@@ -1,7 +1,9 @@
 <?php
 
 require_once __DIR__ . "/../middleware/session.php";
-require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../database/Story.php";
+require_once __DIR__ . "/../database/User.php";
+require_once __DIR__ . "/../database/Comment.php";
 if (!check_admin()) {
     header("location:../index.php");
     exit;
@@ -14,56 +16,30 @@ $breadcrumb = [
 ];
 
 
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$limit = 10;
-$offset = ($page - 1) * $limit;
+$storyModel = new Story();
+$userModel = new User();
 
-$query = "select * from stories limit $limit offset $offset";
-$stories = mysqli_query($connect, $query);
+$commentModel = new Comment();
 
-$query = "select count(*) from stories";
-$count_record = mysqli_query($connect, $query);
-
-$total_record = mysqli_fetch_column($count_record);
-$total_page = ceil(intval($total_record) / intval($limit));
-
+[
+    'data' => $stories,
+    'total_record' => $total_record,
+    'total_page' => $total_page,
+    'current_page' => $page,
+] = $storyModel->paginate(limit: 10, withDeletedAt: true);
 
 $prev = $page - 1;
 $next = $page + 1;
 
 
 
-$query = "select 
-sum(view_count) as total_view_count, count(*) as total_review 
-from stories";
+$total_view_count = $storyModel->totalViewCount();
 
-$result = mysqli_query($connect, $query);
-$review_statistic = mysqli_fetch_array($result);
+$total_user = $userModel->countAll();
 
-$query = "select 
-count(*) as total_user 
-from users";
-
-$result = mysqli_query($connect, $query);
-$user_statistic = mysqli_fetch_array($result);
-
-$query = "select 
-count(*) as total_comment
-from comments";
-
-$result = mysqli_query($connect, $query);
-$comment_statistic = mysqli_fetch_array($result);
+$total_comment = $commentModel->countAll();
 
 
-
-
-function is_pinned($pinned)
-{
-    return $pinned === '0';
-}
-
-
-mysqli_close($connect);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,19 +79,19 @@ mysqli_close($connect);
                                 <h3 class="text-primary">Statistic</h3>
                                 <div class="total_view_count">
                                     <span class="text-primary">Sum of view count: </span>
-                                    <?= $review_statistic['total_view_count'] ?>
+                                    <?= $total_view_count ?>
                                 </div>
                                 <div class="total_review">
                                     <span class="text-primary">Count of review: </span>
-                                    <?= $review_statistic['total_review'] ?>
+                                    <?= $total_record ?>
                                 </div>
                                 <div class="total_user">
                                     <span class="text-success">Count of user: </span>
-                                    <?= $user_statistic['total_user'] ?>
+                                    <?= $total_user ?>
                                 </div>
                                 <div class="total_comment">
                                     <span class="text-success">Count of comment: </span>
-                                    <?= $comment_statistic['total_comment'] ?>
+                                    <?= $total_comment ?>
                                 </div>
                                 <a href="create_review.php" class="btn btn-success">Create Review</a>
                             </div>
@@ -151,7 +127,7 @@ mysqli_close($connect);
                                     <td>
 
                                         <a href='edit_review.php?id=<?= $each["id"] ?>' class="btn btn-primary">Edit</a>
-                                        <?php if (is_pinned($each['pinned'])) : ?>
+                                        <?php if ($each['pinned'] == 0) : ?>
                                             <a href='reviews/pinned_review.php?id=<?= $each["id"] ?>&action=<?= "pin" ?>' class="btn btn-success">Pin</a>
                                         <?php else : ?>
                                             <a href='reviews/pinned_review.php?id=<?= $each["id"] ?>&action=<?= "unpin" ?>' class="btn btn-success">Unpin</a>

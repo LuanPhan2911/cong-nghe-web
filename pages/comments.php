@@ -2,7 +2,9 @@
     <div class="comments-body"></div>
     <div class="btn btn-primary" id="load_more">Đọc tiếp</div>
 </div>
-<?php require_once __DIR__ . '/report_form.php' ?>
+<?php
+require_once __DIR__ . '/report_form.php'
+?>
 <script>
     $(function() {
 

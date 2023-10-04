@@ -3,7 +3,7 @@ require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
 // require_once __DIR__ . "/../database/connect.php";
 
-require_once __DIR__ . "/../database/pdo.php";
+
 require_once __DIR__ . "/../database/User.php";
 if (!check_admin()) {
     header("location:../index.php");
@@ -43,12 +43,15 @@ $breadcrumb = [
 // $prev = $page - 1;
 // $next = $page + 1;
 
+
+$userModel = new User();
+
 [
     'data' => $users,
     'total_record' => $total_record,
     'total_page' => $total_page,
     'current_page' => $page,
-] = (new User($conn))->paginate();
+] = $userModel->paginate();
 $prev = $page - 1;
 $next = $page + 1;
 

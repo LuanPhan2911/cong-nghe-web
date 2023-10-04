@@ -1,8 +1,5 @@
 <?php
 require_once __DIR__ . "/middleware/session.php";
-// require_once __DIR__ . "/database/connect.php";
-
-require_once __DIR__ . '/database/pdo.php';
 require_once __DIR__ . '/database/User.php';
 
 if (!check_login()) {
@@ -14,19 +11,15 @@ if (empty($_GET["id"])) {
     exit;
 }
 $user_id = $_GET["id"];
-// $query = "select * from users where id=$user_id";
-// $result = mysqli_query($connect, $query);
-// $user = mysqli_fetch_array($result);
 
-$user = (new User($conn))->findOne($user_id);
+$userModel = new User();
+$user = $userModel->findOne($user_id);
 
 if (empty($user)) {
     header("location:/404.php");
     exit;
 }
 
-
-// mysqli_close($connect);
 ?>
 <!DOCTYPE html>
 <html lang="en">
