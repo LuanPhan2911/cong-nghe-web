@@ -3,10 +3,12 @@
     <div class="btn btn-primary" id="load_more">Đọc tiếp</div>
 </div>
 <?php
-require_once __DIR__ . '/report_form.php'
+require_once __DIR__ . '/../report/report_form.php'
 ?>
 <script>
     $(function() {
+
+
 
         let page = 1;
         let commentsHtml = [];
@@ -47,7 +49,7 @@ require_once __DIR__ . '/report_form.php'
             );
             $.ajax({
                 type: "get",
-                url: "pages/get_comments.php",
+                url: "pages/comment/get_comments.php",
                 data: {
                     id: urlParams.get('id'),
                     page
@@ -118,5 +120,6 @@ require_once __DIR__ . '/report_form.php'
                 fetchComments();
             }
         })
+
     })
 </script>

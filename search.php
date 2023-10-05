@@ -49,6 +49,14 @@ $reviews = $storyModel->findAll($q);
     </main>
     <?php require_once __DIR__ . "/layouts/footer.php" ?>
     <?php require_once __DIR__ . "/layouts/script.php" ?>
+    <script>
+        $(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            $('.story_name').mark(urlParams.get('q'));
+            $('.author_name').mark(urlParams.get('q'));
+        })
+    </script>
 </body>
 
 </html>

@@ -1,8 +1,6 @@
 <?php
-// require_once __DIR__ . "/../database/connect.php";
 
 require_once __DIR__ . '/../database/User.php';
-
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
 
@@ -28,18 +26,12 @@ if (isset($gender) && !in_array($gender, [0, 1])) {
     header("location:../user.php?id=$id");
     exit;
 }
-// if (!is_uploaded_file($avatar['tmp_name'])) {
-//     $_SESSION["err"] = "Chưa cập nhật ảnh đại diện!";
-//     header("location:../user.php?id=$id");
-//     exit;
-// }
+
 
 // update avatar
 
 
-// $query = "select avatar from users where id='$id'";
-// $result = mysqli_query($connect, $query);
-// $old_avatar = mysqli_fetch_column($result);
+
 $userModel = new User();
 
 $data = $userModel->findOne($id);
@@ -60,31 +52,6 @@ if (isset($avatar) && is_uploaded_file($avatar['tmp_name'])) {
 }
 
 
-
-
-
-
-
-// $birth_year = empty($birth_year) ? NULL : (int)$birth_year;
-
-
-// update user
-
-// $query = "update users set
-//     name='$name',
-//     avatar='$path_avatar',
-//     birth_year=$birth_year,
-//     description='$description',
-//     gender='$gender'
-//     where
-//     id='$id'
-// ";
-
-// $result = mysqli_query($connect, $query);
-
-
-
-// mysqli_close($connect);
 
 $result = $userModel->update([
     'name' => $name,

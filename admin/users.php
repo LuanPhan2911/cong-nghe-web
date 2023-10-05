@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../middleware/session.php";
 require_once __DIR__ . "/../helper/helper.php";
-// require_once __DIR__ . "/../database/connect.php";
+
 
 
 require_once __DIR__ . "/../database/User.php";
@@ -22,28 +22,6 @@ $breadcrumb = [
 
 
 
-
-
-// $page = isset($_GET['page']) ? $_GET['page'] : 1;
-// $limit = 10;
-// $offset = ($page - 1) * $limit;
-
-// $order_by = "DESC";
-
-// $query = "select id,name,email, avatar, birth_year, gender, created_at, deleted_at from users where role=0 order by deleted_at $order_by limit $limit offset $offset ";
-// $users = mysqli_query($connect, $query);
-
-// $query = "select count(*) from users where role = 0";
-// $count_record = mysqli_query($connect, $query);
-
-// $total_record = mysqli_fetch_column($count_record);
-// $total_page = ceil(intval($total_record) / intval($limit));
-
-
-// $prev = $page - 1;
-// $next = $page + 1;
-
-
 $userModel = new User();
 
 [
@@ -54,13 +32,6 @@ $userModel = new User();
 ] = $userModel->paginate();
 $prev = $page - 1;
 $next = $page + 1;
-
-
-
-
-// mysqli_close($connect);
-
-
 
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-// require_once __DIR__ . "/../database/connect.php";
+
 require_once __DIR__ . '/../database/User.php';
 require_once __DIR__ . "/../middleware/session.php";
 $email = $_POST["email"] ?? NULL;
@@ -13,13 +13,6 @@ if (empty($email) || empty($password)) {
     exit;
 }
 
-//mysqli
-
-// $query = "select * from users where email='$email'and deleted_at is null";
-// $result = mysqli_query($connect, $query);
-// $data = mysqli_fetch_array($result);
-
-// pdo
 $userModel = new User();
 
 $data = $userModel->exist($email);
@@ -61,9 +54,3 @@ if (!empty($data)) {
     header("location:../login.php");
     exit;
 }
-
-
-
-
-
-// $connect->close();

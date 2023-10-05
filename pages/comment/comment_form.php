@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../middleware/session.php";
+require_once __DIR__ . "/../../middleware/session.php";
 ?>
 
 
@@ -14,7 +14,7 @@ require_once __DIR__ . "/../middleware/session.php";
             </div>
             <div class="col-9">
                 <div class="card-body">
-                    <form action="pages/create_comment.php" method="post" id="comment-form">
+                    <form action="pages/comment/create_comment.php" method="post" id="comment-form">
                         <input type="hidden" name="story_id" value="<?= $story['id'] ?>">
                         <textarea name="comment_content" rows="5" class="form-control" id="comment_content"><?= old_value('comment_content') ?></textarea>
 

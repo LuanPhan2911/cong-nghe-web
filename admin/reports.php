@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../middleware/session.php";
-require_once __DIR__ . "/../database/connect.php";
+require_once __DIR__ . "/../database/Report.php";
 if (!check_admin()) {
     header("location:../index.php");
     exit;
@@ -24,26 +24,13 @@ if (!in_array($reported_type, ['stories', 'comments'])) {
 
 $comments = [];
 $stories = [];
-if ($reported_type === 'comments') {
-    $query = "select 
-    reports.id, reports.content,reports.finish,
-    comments.id as comment_id, comments.content as comment_content, comments.deleted_at as comment_deleted
-    from reports
-    join comments on reports.reported_id=comments.id
-    where reported_type='comments'
-    order by reports.finish asc    
-    ";
-    $comments = mysqli_query($connect, $query);
+
+$reportModel = new Report();
+
+if ($reported_type == 'comments') {
+    $comments = $reportModel->getReport('comments');
 } else {
-    $query = "select 
-    reports.id, reports.content,reports.finish,
-    stories.id as story_id, stories.name as story_name
-    from reports
-    join stories on reports.reported_id=stories.id
-    where reported_type='stories'
-    order by reports.finish asc    
-    ";
-    $stories = mysqli_query($connect, $query);
+    $stories = $reportModel->getReport('stories');
 }
 
 
@@ -72,7 +59,7 @@ if ($reported_type === 'comments') {
 
                     <?php if ($reported_type === 'comments') : ?>
 
-                        <?php if (mysqli_num_rows($comments) > 0) : ?>
+                        <?php if (!empty($comments)) : ?>
                             <table class="table table-hover table-bordered caption-top shadow">
                                 <caption>
                                     <h3 class="text-success">List of report comments</h3>
@@ -119,10 +106,10 @@ if ($reported_type === 'comments') {
                         <?php endif;  ?>
 
                     <?php else : ?>
-                        <?php if (mysqli_num_rows($stories) > 0) : ?>
+                        <?php if (!empty($stories)) : ?>
                             <table class="table table-hover table-bordered caption-top shadow">
                                 <caption>
-                                    <h3 class="text-success">List of report comments</h3>
+                                    <h3 class="text-success">List of report Story</h3>
                                 </caption>
                                 <thead>
                                     <tr>

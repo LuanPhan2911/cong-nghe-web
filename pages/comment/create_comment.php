@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . "/../database/connect.php";
-require_once __DIR__ . "/../middleware/session.php";
+
+require_once __DIR__ . "/../../database/Comment.php";
+require_once __DIR__ . "/../../database/Story.php";
+require_once __DIR__ . "/../../database/User.php";
+require_once __DIR__ . "/../../middleware/session.php";
 
 $redirect_back = "location:" . $_SERVER['HTTP_REFERER'];
 if (!check_login()) {
@@ -19,9 +22,22 @@ if (empty($story_id) || empty($user_id) || empty($comment_content)) {
     exit;
 }
 
-$query = "select * from stories where id='$story_id'";
-$result = mysqli_query($connect, $query);
-if (!(mysqli_num_rows($result) > 0)) {
+
+$storyModel = new Story();
+
+$data = $storyModel->findOne($story_id);
+
+if (empty($data)) {
+    $_SESSION['err'] = "Nội dung bình luận không hợp lệ!";
+    $_SESSION['comment_content'] = $comment_content;
+    header($redirect_back);
+    exit;
+}
+
+$userModel = new User();
+
+$user = $userModel->findOne($user_id);
+if (empty($user)) {
     $_SESSION['err'] = "Nội dung bình luận không hợp lệ!";
     $_SESSION['comment_content'] = $comment_content;
     header($redirect_back);
@@ -29,21 +45,11 @@ if (!(mysqli_num_rows($result) > 0)) {
 }
 
 
-$query = "select * from users where id='$user_id'";
-$result = mysqli_query($connect, $query);
-if (!(mysqli_num_rows($result) > 0)) {
-    $_SESSION['err'] = "Nội dung bình luận không hợp lệ!";
-    $_SESSION['comment_content'] = $comment_content;
-    header($redirect_back);
-    exit;
-}
+$commentModel = new Comment();
 
-
-
-$query = "insert into comments(user_id, story_id, content)
-            values('$user_id', '$story_id', '$comment_content')";
-
-$result = mysqli_query($connect, $query);
+$result = $commentModel->insert(
+    compact(['user_id', 'story_id', 'comment_content'])
+);
 
 if ($result) {
     $_SESSION['msg'] = "Bình luận thành công!";

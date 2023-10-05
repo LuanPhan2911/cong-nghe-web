@@ -24,7 +24,7 @@
                     <?php $comment_form = false ?>
                     <?php require_once __DIR__ . "/pages/review/new_review.php" ?>
                     <?php
-                    require_once __DIR__ . "/pages/comment_review.php"
+                    require_once __DIR__ . "/pages/comment/comment_review.php"
                     ?>
 
 

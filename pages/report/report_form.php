@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="report_form" action="pages/create_report.php" method="post">
+                <form id="report_form" action="pages/report/create_report.php" method="post">
                     <div class="mb-3">
                         <label for="">Nội dung báo cáo:</label>
                         <input type="text" name="content" id="report-content" class="form-control">
@@ -47,7 +47,7 @@
                 $("#send-report").attr('disabled', true);
                 $.ajax({
                     type: "POST",
-                    url: "pages/create_report.php",
+                    url: "pages/report/create_report.php",
                     data: $(form).serialize(),
                     success: function(response) {
                         let {

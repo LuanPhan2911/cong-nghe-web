@@ -70,7 +70,7 @@ $storyModel->updateViewCount($id);
                 <div class="col-lg-4">
                     <?php $comment_form = true ?>
                     <?php require_once __DIR__ . "/pages/review/new_review.php" ?>
-                    <?php require_once __DIR__ . "/pages/comment_review.php" ?>
+                    <?php require_once __DIR__ . "/pages/comment/comment_review.php" ?>
                 </div>
             </div>
         </div>

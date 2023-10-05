@@ -33,14 +33,21 @@ class User extends Model
         return empty($user_id) ? NULL : $user_id;
     }
 
-    public function findOne(string $id)
+    public function findOne(string $id, bool $withDeletedAt = false)
     {
-        $statement = $this->conn->prepare('
-        select * from users where id = :id');
+        $query = "";
+
+        if ($withDeletedAt) {
+            $query = "select * from users where id = :id";
+        } else {
+            $query = "select * from users where deleted_at is NULL and   id = :id";
+        }
+        $statement = $this->conn->prepare($query);
         $statement->execute([
             'id' => $id
         ]);
-        return $statement->fetch() ?? NULL;
+        $data = $statement->fetch();
+        return empty($data) ? NULL : $data;
     }
 
     public function update(array $attr)

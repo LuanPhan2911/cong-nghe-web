@@ -1,7 +1,4 @@
 <?php
-//newest review
-// $query = "select * from stories where deleted_at is NULL order by created_at desc limit 10";
-// $newest_review = mysqli_query($connect, $query);
 
 require_once __DIR__ . "/../../database/Story.php";
 $storyModel = new Story();

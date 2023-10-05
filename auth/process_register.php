@@ -1,7 +1,6 @@
 <?php
-// require_once __DIR__ . "/../database/connect.php";
-require_once __DIR__ . '/../database/User.php';
 
+require_once __DIR__ . '/../database/User.php';
 require_once __DIR__ . "/../middleware/session.php";
 $name = $_POST["name"] ?? NULL;
 $email = $_POST["email"] ?? NULL;
@@ -19,11 +18,6 @@ if (empty($name) || empty($email) || empty($password)) {
 
 //check email exist
 
-// $query_check_email = "select * from users where email='$email'";
-// $result_email = mysqli_query($connect, $query_check_email);
-// $data = mysqli_fetch_array($result_email);
-
-//pdo
 
 
 $userModel = new User();
@@ -43,10 +37,6 @@ if (!empty($data)) {
 
 $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-// $query = "insert into users(name, email, password)
-//     values('$name', '$email', '$password_hash')";
-// $result = mysqli_query($connect, $query);
-
 $user_id = $userModel->insert($name, $email, $password_hash);
 
 if (isset($user_id)) {
@@ -58,8 +48,3 @@ if (isset($user_id)) {
     $_SESSION["msg"] = "Bạn đã đăng ký thành công!";
     header("location:../index.php");
 }
-
-
-
-
-$connect->close();

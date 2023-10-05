@@ -106,8 +106,7 @@ class Story extends Model
         select * from stories
         where 
         name like '%$q%' or 
-        author_name like '%$q%' or 
-        genres like '%$q%'
+        author_name like '%$q%'
         ");
 
 

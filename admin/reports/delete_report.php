@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . "/../../database/connect.php";
+
+require_once __DIR__ . "/../../database/Report.php";
 require_once __DIR__ . "/../../middleware/session.php";
 if (!check_admin()) {
     header("location:../../index.php");
@@ -17,15 +18,12 @@ if (!in_array($type, ['comments', 'stories'])) {
     exit;
 }
 
-$query = "delete from reports where finish=1 and reported_type='$type'";
 
-$result = mysqli_query($connect, $query);
+$reportModel = new Report();
 
-if (isset($result)) {
-    $_SESSION["msg"] = "Delete finish reports success!";
-}
+$result = $reportModel->deleteFinish($type);
 
-mysqli_close($connect);
+$_SESSION["msg"] = "Delete finish reports success!";
 
 header($redirect_back);
 exit;

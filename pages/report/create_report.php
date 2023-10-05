@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . "/../database/connect.php";
-require_once __DIR__ . "/../middleware/session.php";
+require_once __DIR__ . "/../../database/Report.php";
+require_once __DIR__ . "/../../middleware/session.php";
 header('Content-Type: application/json; charset=utf-8');
 $redirect_back = "location:" . $_SERVER['HTTP_REFERER'];
 $reported_type = $_POST['reported_type'] ?? NULL;
@@ -25,9 +25,11 @@ if (!in_array($reported_type, ['stories', 'comments'])) {
     return;
 }
 
-$query = "select * from $reported_type where id= '$reported_id'";
-$result = mysqli_query($connect, $query);
-if (mysqli_num_rows($result) < 0) {
+$reportModel = new Report();
+
+$validReport = $reportModel->valid($reported_type, $reported_id);
+
+if (empty($validReport)) {
     echo json_encode([
         'message' => "Nội dung báo cáo không hợp lệ!",
         'success' => false
@@ -35,20 +37,19 @@ if (mysqli_num_rows($result) < 0) {
     return;
 }
 
-$query = "insert into reports(reported_id, reported_type, content)
-values('$reported_id','$reported_type', '$report_content')";
-$result = mysqli_query($connect, $query);
 
-if ($result) {
+$result = $reportModel->insert(compact(['reported_id', 'reported_type', 'report_content']));
+
+if (empty($result)) {
     echo json_encode([
-        'message' => "Báo cáo thành công!",
-        'success' => true
+        'message' => "=Có lỗi xảy ra!",
+        'success' => false
     ]);
     return;
 }
 
+
 echo json_encode([
-    'message' => "=Có lỗi xảy ra!",
-    'success' => false
+    'message' => "Báo cáo thành công!",
+    'success' => true
 ]);
-return;
