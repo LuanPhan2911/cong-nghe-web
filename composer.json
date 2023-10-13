@@ -1,0 +1,20 @@
+{
+  "name": "acer/web-review-truyen",
+  "autoload": {
+    "psr-4": {
+      "App\\": "./src"
+    },
+    "files": [
+      "src/helper/helper.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "luanphan2911",
+      "email": "baoluan291103oe@gmail.com"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.5"
+  }
+}
