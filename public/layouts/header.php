@@ -17,7 +17,7 @@
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <form class="d-flex mb-3 position-relative" method="get" action="search.php">
-                                    <input class="form-control mx-2" type="search" placeholder="Tìm kiếm" name="q" value="<?= htmlspecialchars($_GET['q']) ?? '' ?>">
+                                    <input class="form-control mx-2" type="search" placeholder="Tìm kiếm" name="q" value="<?= $_GET['q'] ?? '' ?>">
                                     <button class="btn position-absolute end-0 top-0 me-5" type="submit">
                                         <i class="bi bi-search"></i>
                                     </button>

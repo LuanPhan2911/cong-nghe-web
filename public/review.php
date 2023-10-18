@@ -17,8 +17,17 @@ if (empty($story)) {
     redirect("/404.php");
     exit;
 }
+if (isset($_SESSION['view_count_delay'])) {
+    $time_delay = $_SESSION['view_count_delay'];
+    if (time() - $time_delay >= 0) {
+        $storyModel->updateViewCount($id);
+        unset($_SESSION['view_count_delay']);
+    }
+} else {
+    $_SESSION['view_count_delay'] = time() + 60;
+    $storyModel->updateViewCount($id);
+}
 
-$storyModel->updateViewCount($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,6 +100,7 @@ $storyModel->updateViewCount($id);
             $('#reported_type').val(reported_type);
             $('#reported_id').val(reported_id);
 
+            $('.modal-title').text(`Báo cáo ${reported_type=='comments'?'bình luận': 'Review'}`)
             $('#report-modal').modal('show');
             $('#report-content').val('');
 

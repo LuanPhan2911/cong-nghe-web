@@ -40,7 +40,7 @@ class Comment extends Model
     }
     public function paginate(int $limit = 10, $story_id = NULL)
     {
-        $page =  htmlspecialchars($_GET['page']) ?? 1;
+        $page = htmlspecialchars($_GET['page'] ?? 1);
         $offset = ($page - 1) * $limit;
 
         $query = "select 

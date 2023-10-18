@@ -68,14 +68,14 @@ $total_comment = $commentModel->countAll();
                 </header>
                 <main>
                     <div class="row mb-3">
-                        <div class="col-8">
+                        <div class="col-lg-8 mb-3">
                             <div class="chart p-3 shadow">
                                 <h3 class="text-primary">View count chart</h3>
                                 <canvas id="view_count_line_chart" class="w-100"></canvas>
                             </div>
 
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 mb-3">
                             <div class="statistic p-3 shadow">
                                 <h3 class="text-primary">Statistic</h3>
                                 <div class="total_view_count">

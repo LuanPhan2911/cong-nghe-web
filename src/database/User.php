@@ -74,7 +74,7 @@ class User extends Model
 
     public function paginate(int $limit = 10)
     {
-        $page =  htmlspecialchars($_GET['page']) ?? 1;
+        $page =  htmlspecialchars($_GET['page'] ?? 1);
         $offset = ($page - 1) * $limit;
 
         $statement = $this->conn->query("select 

@@ -12,6 +12,11 @@ if (empty(htmlspecialchars($_GET["id"]))) {
     redirect("/404.php");
     exit;
 }
+
+if ($_SESSION['user_id'] != $_GET["id"]) {
+    redirect("/404.php");
+    exit;
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = htmlspecialchars($_POST['id']) ?? NULL;
@@ -73,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result) {
         $_SESSION['msg'] = "Cập nhật thông tin tài khoản thành công!";
         $_SESSION['user_name'] = $name;
-        $_SESSION['user_avatar'] = $path_avatar;
+        $_SESSION['user_avatar'] = $path_avatar ?? 'users/default.webp';
     }
 
     redirect("/user.php?id=$id");

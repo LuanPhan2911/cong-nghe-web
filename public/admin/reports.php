@@ -18,7 +18,7 @@ $breadcrumb = [
     ],
 ];
 
-$reported_type = htmlspecialchars($_GET['type']) ?? 'comments';
+$reported_type = htmlspecialchars($_GET['type'] ?? 'comments');
 
 if (!in_array($reported_type, ['stories', 'comments'])) {
     $reported_type = 'comments';

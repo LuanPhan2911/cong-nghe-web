@@ -91,6 +91,7 @@ require_once __DIR__ . '/../report/report_form.php'
                                 $('#reported_type').val(reported_type);
                                 $('#reported_id').val(reported_id);
 
+                                $('.modal-title').text(`Báo cáo ${reported_type=='comments'?'bình luận': 'Review'}`)
                                 $('#report-modal').modal('show');
                                 $('#report-content').val('');
 

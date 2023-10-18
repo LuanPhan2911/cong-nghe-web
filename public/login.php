@@ -6,9 +6,12 @@ require_once __DIR__ . "/../vendor/autoload.php";
 if (check_login()) {
     redirect("/index.php");
 }
+
 $_SESSION['redirect_back'] = $_SERVER['HTTP_REFERER'];
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
 
     $email = htmlspecialchars($_POST["email"]) ?? NULL;
     $password = htmlspecialchars($_POST["password"]) ?? NULL;

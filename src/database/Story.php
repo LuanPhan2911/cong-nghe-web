@@ -30,7 +30,7 @@ class Story extends Model
     }
     public function paginate(int $limit = 5, bool $withDeletedAt = false)
     {
-        $page =  htmlspecialchars($_GET['page']) ?? 1;
+        $page =  htmlspecialchars($_GET['page'] ?? 1);
         $offset = ($page - 1) * $limit;
 
         $query = "";
@@ -106,9 +106,12 @@ class Story extends Model
     {
         $statement = $this->conn->query("
         select * from stories
-        where 
-        name like '%$q%' or 
-        author_name like '%$q%'
+        where
+        deleted_at is NULL 
+        and 
+        (name like '%$q%'
+        or 
+        author_name like '%$q%')
         ");
 
 
