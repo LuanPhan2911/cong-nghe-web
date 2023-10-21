@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+define('VIEW_DIR', __DIR__ . "/../views/");
+define('SRC_DIR', __DIR__ . "/..//");
+
+function user_id()
+{
+    return $_SESSION['user_id'] ?? NULL;
+}
 function flash($key)
 {
     if (isset($_SESSION[$key])) {
@@ -40,9 +48,15 @@ function remove_file($target)
 {
     $dir = str_replace("\\", "/", __DIR__);
 
-    return unlink("$dir/../public/assets/images/" . $target);
+    return unlink("$dir/../../public/assets/images/" . $target);
 }
 function redirect(string $location)
 {
     header("location:" . $location);
+}
+function view(string $view, $data = [])
+{
+    extract($data);
+    $view = str_replace(".", "/", $view);
+    require_once VIEW_DIR . $view . ".php";
 }
